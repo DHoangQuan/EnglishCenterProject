@@ -1,0 +1,135 @@
+﻿@model IEnumerable<EnglishCenter.Models.ReportForTeachingTime>
+@{
+    ViewBag.Title = "ReportOfTeaching1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Welcome @Session["RoleName"].ToString() @Session["PersonName"].ToString()</h2>
+
+<form action="@Url.Action("ReportOfTeaching1", "ReportForTeachingTime")" method="post">
+    <div>
+        <span>input year</span>
+        <input style="width:300px; margin-top:5px;margin-bottom:5px;" class="form-control" type="text" name="year" />
+    </div>
+    @*<input type="datetime" readonly="readonly" id="dateren" name="dateren" />*@
+    <button class="btn btn-gradient-info btn-fw" style="width:300px;" type="submit">See Report</button>
+</form>
+<div class="table-edit">
+    <table class="table">
+        <thead class="table-cate-header">
+            <tr>
+                <th>
+                    <h1>
+                        <span>
+                            Year
+                        </span>
+                    </h1>
+                </th>
+                <th>
+                    <span>
+                        Average per month
+                    </span>
+                </th>
+                <th>
+                    <span>Total Times of teaching</span>
+                </th>
+                <th>
+                    <span>January</span>
+                </th>
+                <th>
+                    <span>Febuary</span>
+                </th>
+                <th>
+                    <span>March</span>
+                </th>
+                <th>
+                    <span>April</span>
+                </th>
+                <th>
+                    <span>May</span>
+                </th>
+                <th>
+                    <span>June</span>
+                </th>
+                <th>
+                    <span>July</span>
+                </th>
+                <th>
+                    <span>August</span>
+                </th>
+                <th>
+                    <span>September</span>
+                </th>
+                <th>
+                    <span>October</span>
+                </th>
+                <th>
+                    <span>November</span>
+                </th>
+                <th>
+                    <span>December</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table-cate-header">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <h1>
+                            <span>
+                                @item.Year
+                            </span>
+                        </h1>
+                    </td>
+                    <td>
+                        <span>
+                            @item.AverageTimes
+                        </span>
+                    </td>
+                    <td>
+                        <span>@item.TotalTime</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesJan</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesFeb</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesMar</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesApr</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesMay</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesJune</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesJuly</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesAug</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesSep</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesOct</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesNov</span>
+                    </td>
+                    <td>
+                        <span>@item.TeachingTimesDec</span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+@Html.Action("ReportOfTeachingSkill", "ReportForTeachingTimeSkill", new { year = Session["ParameterForReportForTeachingTimeSkill"].ToString(), peopleid = Session["DetailsPersonID"].ToString() })
+@Html.Action("DetailsPartial", "People",new {id = Session["DetailsPersonID"].ToString() })

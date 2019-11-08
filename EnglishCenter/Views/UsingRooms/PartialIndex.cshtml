@@ -1,0 +1,98 @@
+﻿@model IEnumerable<EnglishCenter.Models.UsingRoom>
+
+@{
+    ViewBag.Title = "PartialIndex";
+    
+}
+@{
+    if (Model.Count() == 0 || Model == null)
+    {
+        <a class="btn btn-gradient-info btn-rounded btn-fw" href="@Url.Action("CustomeCreate", "UsingRooms", new { datestr1 = Session["firstday"]})">Close</a>
+        <h1>Have no class here</h1>
+    }else
+    {
+
+    
+<h2>Table For </h2>
+<h2>Date: @ViewBag.tabledate</h2>
+<h2>Slot: @ViewBag.tableslot</h2>
+<a class="btn btn-gradient-info btn-rounded btn-fw" href="@Url.Action("CustomeCreate", "UsingRooms", new { datestr1 = Session["firstday"]})">Close Table</a>
+<table class="table" id="table3">
+    <thead>
+        <tr>
+            <th>
+                <span>Lesson Name</span>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Room.Floor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slot.SlotName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DayOfWeek)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UseFor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.Lesson.LessonName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.Floor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slot.SlotName)
+                </td>
+                <td>
+                    <span>@Convert.ToDateTime(item.Date.ToString()).ToShortDateString()</span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DayOfWeek)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UseFor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.UsingRoomID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.UsingRoomID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.UsingRoomID })*@
+                    <a href="javascript:void(0);" class="editforslotinday" data-id="@item.UsingRoomID" data-toggle="modal" data-target="#myModal">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div id='myModal' class='modal'>
+        <div class="modal-dialog" style="margin:auto;">
+            <div class="modal-content" style="width:1000px;margin-top:150px;">
+                <div id='myModalContent' style="padding: 20px;"></div>
+            </div>
+        </div>
+    </div>
+    }
+@Html.Action("CustomeCreate", "UsingRooms", new { datestr1 = Session["firstday"], check = "a" })
+    
+}

@@ -1,0 +1,51 @@
+﻿@model EnglishCenter.Models.Comment
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Comment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Content.content_title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content.content_title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Person.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Person.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comment_content)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comment_content)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.comment_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.comment_date)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.comment_id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

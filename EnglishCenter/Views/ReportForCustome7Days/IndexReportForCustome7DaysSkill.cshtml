@@ -1,0 +1,181 @@
+﻿@model IEnumerable<EnglishCenter.Models.ReportForCustome7Days>
+@{
+    @*<div style="height:500px">
+            <div id="chartContainer3" style="margin-top: 20px"></div>
+        </div>*@
+    <div class="col-lg-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Bar chart</h4>
+                <canvas id="barChart" style="height:230px; width:500px;"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="table-edit">
+        <table id="tableForReport" class="table">
+            <thead class="table-cate-header">
+                <tr>
+                    <th>
+                        <span>Skill</span>
+                    </th>
+                    <th>
+                        <span>Number of lessons in skill</span>
+                    </th>
+                    <th>
+                        <span>Percentage of skill in 7 days</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="table-cate-header">
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.numberofskill)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.percentofskill)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+        @*@Html.ActionLink("print report", "PrintViewToPdf")*@
+    </div>
+    @*<script>
+
+            var option3 =
+            {
+                theme: "theme2",
+                exportEnabled: true,
+                animationEnabled: true,
+                animationDuration: 2000,
+                height: 500,
+                title: {
+                    text: "percent of skill",
+                    maxWidth: 600,
+                    margin: 20,
+                },
+                axisX: { labelAngle: 0, },
+                axisY: {
+                    title: "Skills",
+                    interval: 1
+                },
+                data: [
+                {
+                    type: "column",
+                    indexLabel: "{y}",
+                    indexLabelPlacement: "outside",
+                    indexLabelOrientation: "horizontal",
+                    indexLabelFontWeight: "bold",
+                    dataPoints: [],
+                }
+                ]
+            };
+            @foreach (var item in Model)
+            {
+                @:option3.data[0].dataPoints.push({ label: "@item.Name", y: @item.numberofskill});
+                                                            };
+        </script>*@
+    @*@section scripts{
+
+        <script>
+
+        </script>
+        }*@
+    <script>
+        function drawdata(result) {
+            'use strict';
+            var label = [];
+            var dataNumber = [];
+
+            $.each(result.datapoint, function (i, obj) {
+                label.push(obj.Name);
+                dataNumber.push(obj.numberofskill);
+
+            });
+            var intToRGB = function (value, alpha, max) {
+                var valueAsPercentageOfMax = value / max;
+                var MAX_RGB_INT = 16600000;
+                var valueFromMaxRgbInt = Math.floor(MAX_RGB_INT * valueAsPercentageOfMax);
+
+                var blue = Math.floor(valueFromMaxRgbInt % 256);
+                var green = Math.floor(valueFromMaxRgbInt / 256 % 256);
+                var red = Math.floor(valueFromMaxRgbInt / 256 / 256 % 256);
+
+                return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
+            }
+            var MAX = 25;
+
+            var backgroundColors = dataNumber.map(function (item) {
+                return intToRGB(item, 0.2, MAX);
+            });
+
+            var borderColors = dataNumber.map(function (item) {
+                return intToRGB(item, 1, MAX);
+            });
+            var data = {
+                labels: label,
+                datasets: [{
+                    label: '# of Votes',
+                    data: dataNumber,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+
+                    borderWidth: 1,
+                    fill: false
+                }]
+            };
+            var options = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                }
+
+            };
+            if ($("#barChart").length) {
+                var barChartCanvas = $("#barChart").get(0).getContext("2d");
+                // This will get the first returned node in the jQuery collection.
+                var barChart = new Chart(barChartCanvas, {
+                    type: 'bar',
+                    data: data,
+                    options: options
+                });
+            }
+        }
+        $(function () {
+            $.ajax({
+                url: '/ReportForCustome7Days/IndexReportForCustome7DaysSkill1234',
+                dataType: "json",
+                contentType: "application/json",
+                type: "GET",
+                success: function (result) {
+                    //console.log(result);
+                    //console.log(result.datapoint.length)
+                    drawdata(result);
+                }
+
+            })
+            /* ChartJS
+             * -------
+             * Data and config for chartjs
+             */
+
+        });
+    </script>
+}

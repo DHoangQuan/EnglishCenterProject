@@ -1,0 +1,133 @@
+﻿@model IEnumerable<EnglishCenter.Models.ReportForCustome7DaysLessons>
+
+@*<div style="height:500px">
+    <div id="chartContainer2" style="margin-top: 20px"></div>
+</div>*@
+<div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Pie chart</h4>
+            <canvas id="pieChart" style="height:250px"></canvas>
+        </div>
+    </div>
+</div>
+<div class="table-edit">
+    <table id="tableForReport1" class="table">
+        <thead class="table-cate-header">
+            <tr>
+                <th>
+                    <span>Lesson Name</span>
+                </th>
+                <th>
+                    <span>Repeat times in 7days</span>
+                </th>
+                <th>
+                    <span>Percentage of lesson is taught in 7 days</span>
+                </th>
+                <th>
+                    <span>Topic</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table-cate-header">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LessonName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.repeattimesoflesson)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.percentin7Days)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TopicName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    @*@Html.ActionLink("print report", "PrintViewToPdf")*@
+</div>
+
+<script>
+    
+    function drawdata1(result) {
+        'use strict';
+        var label1 = [];
+        var dataNumber1 = [];
+        $.each(result.datapoint2, function (i, obj) {
+            label1.push(obj.LessonName);
+            dataNumber1.push(obj.repeattimesoflesson);
+
+        });
+        var intToRGB = function (value, alpha, max) {
+            var valueAsPercentageOfMax = value / max;
+
+            var MAX_RGB_INT = 16600000;
+            var valueFromMaxRgbInt = Math.floor(MAX_RGB_INT * valueAsPercentageOfMax);
+
+            var blue = Math.floor(valueFromMaxRgbInt % 256);
+            var green = Math.floor(valueFromMaxRgbInt / 256 % 256);
+            var red = Math.floor(valueFromMaxRgbInt / 256 / 256 % 256);
+
+            return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
+        }
+        var MAX = 26;
+
+        var backgroundColors = dataNumber1.map(function (item) {
+            return intToRGB(item, 0.2, MAX);
+        });
+
+        var borderColors = dataNumber1.map(function (item) {
+            return intToRGB(item, 1, MAX);
+        });
+        var doughnutPieData = {
+            datasets: [{
+                data: dataNumber1,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+            }],
+
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: label1,
+        };
+        var doughnutPieOptions = {
+            responsive: true,
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        };
+        if ($("#pieChart").length) {
+            var pieChartCanvas = $("#pieChart").get(0).getContext("2d");
+            var pieChart = new Chart(pieChartCanvas, {
+                type: 'pie',
+                data: doughnutPieData,
+                options: doughnutPieOptions
+            });
+            console.log(doughnutPieData)
+        }
+    }
+    $(function () {
+        $.ajax({
+            url: '/ReportForCustome7DaysLessons/IndexReportForCustome7DaysLessons1234',
+            dataType: "json",
+            contentType: "application/json",
+            type: "GET",
+            success: function (result) {
+                
+                drawdata1(result);
+            }
+
+        })
+        /* ChartJS
+         * -------
+         * Data and config for chartjs
+         */
+
+    });
+</script>

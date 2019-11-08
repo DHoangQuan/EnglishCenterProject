@@ -1,0 +1,73 @@
+﻿@model IEnumerable<EnglishCenter.Models.Content>
+
+@{
+
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BlogAdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="tablecontent">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Person.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TopicPost.TopicName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.content_title)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.content_post)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.date_post)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Person.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TopicPost.TopicName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.content_title)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.content_post)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>
+                <td>
+
+                    <span>@Convert.ToDateTime(item.date_post.ToString()).ToShortDateString()</span>
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.content_id }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.content_id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.content_id })*@
+                    <a href="@Url.Action("Enable", "Contents", new { id = item.content_id })" class="btn btn-outline-primary btn-fw">Enable</a>
+                    <a href="@Url.Action("Slide", "Contents", new { id = item.content_id })" class="btn btn-outline-primary btn-fw">Slide</a>
+                    <a href="@Url.Action("Disable", "Contents", new { id = item.content_id })" class="btn btn-outline-primary btn-fw">Disable</a>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.content_id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

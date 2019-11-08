@@ -1,0 +1,637 @@
+﻿@*<!DOCTYPE html>*@
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Purple Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/MaterialLayout/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/MaterialLayout/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/MaterialLayout/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/MaterialLayout/images/favicon.png" />
+
+    <!-- Schedule -->
+    <link rel="stylesheet" href="~/MaterialSchedule/assets/css/style.css">
+
+    <!-- Pickdate -->
+    <link rel="stylesheet" href="~/MaterialPickDate/css/pikaday.css">
+    <link rel="stylesheet" href="~/MaterialPickDate/css/site.css">
+
+
+
+    <script src="//code.jquery.com/jquery.js"></script>
+
+    <!-- chart canvas -->
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</head>
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo" href="index.html"><img src="~/MaterialLayout/images/logo.svg" alt="logo" /></a>
+                <a class="navbar-brand brand-logo-mini" href="index.html"><img src="~/MaterialLayout/images/logo-mini.svg" alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <div class="search-field d-none d-md-block">
+                    <!-- <form class="d-flex align-items-center h-100" action="#">
+                      <div class="input-group">
+                        <div class="input-group-prepend bg-transparent">
+                            <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                        </div>
+                        <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                      </div>
+                    </form> -->
+                </div>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <div class="nav-profile-img">
+                                @if (@Session["ImagePerson"].ToString() == "null")
+                                {
+                                    <img src="~/MaterialBlogTemplate/images/NoneImage.png" alt="image" />
+
+                                }
+                                else
+                                {
+                                    <img src="@Session["ImagePerson"].ToString()" alt="image">
+                                }
+                                @*<img src="~/MaterialLayout/images/faces/face1.jpg" alt="image">*@
+                                <span class="availability-status online"></span>
+                            </div>
+                            <div class="nav-profile-text">
+                                <p class="mb-1 text-black">@Session["PersonName"].ToString()</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="@Url.Action("Index", "Rooms")">
+                                <i class="mdi mdi-calendar-multiple text-info"></i>
+                                Management Schedule
+                            </a>
+                            @if (Session["RoleName"].ToString() != "Student")
+                            {
+                                <a class="dropdown-item" href="@Url.Action("Index", "Contents")">
+                                    <i class="mdi mdi-library-books text-success"></i>
+                                    Management Blog
+                                </a>
+                            }
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("Logout", "People")">
+                                <i class="mdi mdi-logout mr-2 text-primary"></i>
+                                Signout
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item d-none d-lg-block full-screen-link">
+                        <a class="nav-link">
+                            <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-email-outline"></i>
+                            <span class="count-symbol bg-warning"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
+                            <h6 class="p-3 mb-0">Messages</h6>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <img src="~/MaterialLayout/images/faces/face4.jpg" alt="image" class="profile-pic">
+                                </div>
+                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                    <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message</h6>
+                                    <p class="text-gray mb-0">
+                                        1 Minutes ago
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <img src="~/MaterialLayout/images/faces/face2.jpg" alt="image" class="profile-pic">
+                                </div>
+                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                    <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>
+                                    <p class="text-gray mb-0">
+                                        15 Minutes ago
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <img src="~/MaterialLayout/images/faces/face3.jpg" alt="image" class="profile-pic">
+                                </div>
+                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                    <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Profile picture updated</h6>
+                                    <p class="text-gray mb-0">
+                                        18 Minutes ago
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <h6 class="p-3 mb-0 text-center">4 new messages</h6>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
+                            <i class="mdi mdi-bell-outline"></i>
+                            <span class="count-symbol bg-danger"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                            <h6 class="p-3 mb-0">Notifications</h6>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-success">
+                                        <i class="mdi mdi-calendar"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                    <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
+                                    <p class="text-gray ellipsis mb-0">
+                                        Just a reminder that you have an event today
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-warning">
+                                        <i class="mdi mdi-settings"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                    <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
+                                    <p class="text-gray ellipsis mb-0">
+                                        Update dashboard
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item preview-item">
+                                <div class="preview-thumbnail">
+                                    <div class="preview-icon bg-info">
+                                        <i class="mdi mdi-link-variant"></i>
+                                    </div>
+                                </div>
+                                <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                                    <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
+                                    <p class="text-gray ellipsis mb-0">
+                                        New admin wow!
+                                    </p>
+                                </div>
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <h6 class="p-3 mb-0 text-center">See all notifications</h6>
+                        </div>
+                    </li>
+                    <li class="nav-item nav-logout d-none d-lg-block">
+                        <a class="nav-link" href="@Url.Action("Logout", "People")">
+                            <i class="mdi mdi-power"></i>
+                        </a>
+                    </li>
+
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <!-- Profile -->
+                    <li class="nav-item nav-profile">
+                        <a href="@Url.Action("Details", "People", new {id = @Session["PersonID"].ToString() })" class="nav-link">
+                            <div class="nav-profile-image">
+                                @*<img src="~/MaterialLayout/images/faces/face1.jpg" alt="profile">*@
+                                @if (@Session["ImagePerson"].ToString() == "null")
+                                {
+                                    <img src="~/MaterialBlogTemplate/images/NoneImage.png" />
+
+                                }
+                                else
+                                {
+                                    <img src="@Session["ImagePerson"].ToString()" alt="profile">
+                                }
+
+                                <span class="login-status online"></span> <!--change to offline or busy as needed-->
+                            </div>
+                            <div class="nav-profile-text d-flex flex-column">
+                                <span class="font-weight-bold mb-2">@Session["PersonName"].ToString()</span>
+                                <span class="text-secondary text-small">@Session["RoleName"].ToString()</span>
+                            </div>
+                            <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                        </a>
+                    </li>
+                    @if (Session["RoleName"].ToString() == "Lecturer")
+                    {
+
+                        <li class="nav-item sidebar-actions">
+                            <ul class="gradient-bullet-list mt-4">
+                                <li hidden="hidden"><strong>a</strong></li>
+                                <li hidden="hidden"><strong>a</strong></li>
+                                <li hidden="hidden"><strong>a</strong></li>
+                                <li><strong>Lecturer Schedule</strong></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Calculate2", "UsingRooms",DateTime.Now)">
+                                <span class="menu-title">Teaching Schedule</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("HistoryForLecturer", "UsingRooms",new {idpeople = Session["PersonID"].ToString()  })">
+                                <span class="menu-title">View your teaching history</span>
+                                <i class="mdi mdi-history menu-icon" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    }
+                    @if (Session["RoleName"].ToString() == "Student")
+                    {
+                        <li class="nav-item sidebar-actions">
+                            <ul class="gradient-bullet-list mt-4">
+                                <li><strong>Your Slot: 5</strong></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("HistoryForStudent", "QuantityAndAttendances", new {idpeople = Session["PersonID"].ToString() })">
+                                <span class="menu-title">View your History</span>
+                                <i class="mdi mdi-history menu-icon" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("IndexTest", "UsingRooms")">
+                                <span class="menu-title">Your information</span>
+                                <i class="mdi mdi-information menu-icon" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item sidebar-actions">
+                            <ul class="gradient-bullet-list mt-4">
+                                <li hidden="hidden"><strong>a</strong></li>
+                                <li><strong>Schedule</strong></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Calculate1", "UsingRooms",DateTime.Now)">
+                                <span class="menu-title">Find class</span>
+                                <i class="mdi mdi-magnify menu-icon"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Calculate", "UsingRooms",DateTime.Now)">
+                                <span class="menu-title">Your Schedule</span>
+                                @*<i class="mdi mdi-home menu-icon"></i>*@
+                                <i class="mdi mdi-calendar-multiple menu-icon"></i>
+                            </a>
+                        </li>
+                        
+
+                    }
+
+                    @if (Session["RoleName"].ToString() != "Student")
+                    {
+                        <!-- Room bar -->
+                        <li class="nav-item sidebar-actions">
+                            <ul class="gradient-bullet-list mt-4">
+                                <li><strong>Room</strong></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("IndexTest", "UsingRooms")">
+                                <span class="menu-title">Test Auto</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Rooms")">
+                                <span class="menu-title">Room</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Slots")">
+                                <span class="menu-title">Slot</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "UsingRooms")">
+                                <span class="menu-title">UsingRooms</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+                        <!-- Lessons bar -->
+                        <li class="nav-item sidebar-actions">
+                            <ul class="gradient-bullet-list mt-4">
+                                <li hidden="hidden"><strong>Lessons</strong></li>
+                                <li><strong>Lessons</strong></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Lessons")">
+                                <span class="menu-title">Lessons</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Topics")">
+                                <span class="menu-title">Topic</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Skills")">
+                                <span class="menu-title">Skills</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Classes")">
+                                <span class="menu-title">Classes</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Calculate1", "UsingRooms",DateTime.Now)">
+                                <span class="menu-title">Schedule</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+
+                    <!-- People bar -->
+                        <li class="nav-item sidebar-actions">
+                            <ul class="gradient-bullet-list mt-4">
+                                <li hidden="hidden"><strong>People</strong></li>
+                                <li hidden="hidden"><strong>People</strong></li>
+                                <li><strong>People</strong></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "People")">
+                                <span class="menu-title">Peoples</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "LecturerTimes")">
+                                <span class="menu-title">TechingTime</span>
+                                <i class="mdi mdi-home menu-icon"></i>
+                            </a>
+                        </li>
+                    }
+
+
+
+
+                </ul>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @RenderBody()
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+
+                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">This project is used for managing an English Center<i class="mdi mdi-heart text-danger"></i></span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+
+
+
+    <!-- schedule -->
+    <script src="~/MaterialSchedule/assets/js/util.js"></script>
+    <script src="~/MaterialSchedule/assets/js/main.js"></script>
+
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="~/MaterialLayout/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/MaterialLayout/vendors/js/vendor.bundle.addons.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="~/MaterialLayout/js/off-canvas.js"></script>
+    <script src="~/MaterialLayout/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="~/MaterialLayout/js/dashboard.js"></script>
+
+    <!-- Import D3 Scale Chromatic via CDN -->
+    @*<script src="https://d3js.org/d3-color.v1.min.js"></script>
+        <script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+        <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>*@
+
+
+
+    <!-- Show And hide table-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script>
+        $('#table1').hide();
+        $('#table2').hide();
+        //$('#table3').hide()
+        $(document).ready(function () {
+            $("#button").click(function () {
+                $("#table1").toggle();
+            });
+        });
+        $(document).ready(function () {
+            $("#button1").click(function () {
+                $("#table2").toggle();
+            });
+        });
+    </script>
+    <!-- ckfinder-->
+    <script src="~/Content/ckfinder/ckfinder.js"></script>
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/scripts/ckeditorandfinder.js"></script>
+
+    @*@RenderSection("scripts", required: false)*@
+    <!-- table format-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tablecontent').DataTable({
+                lengthMenu: [7, 10]
+            });
+        });
+        $(document).ready(function () {
+            $('#table1').DataTable({
+                lengthMenu: [5, 10]
+            });
+        });
+        $(document).ready(function () {
+            $('#table3').DataTable({
+                lengthMenu: [5, 10]
+            });
+        });
+        $(document).ready(function () {
+            $('#table2').DataTable({
+                lengthMenu: [5, 10]
+            });
+        });
+        $(document).ready(function () {
+            $('#tableForReport').DataTable({
+                lengthMenu: [5, 10]
+            });
+        });
+        $(document).ready(function () {
+            $('#tableForReport1').DataTable({
+                lengthMenu: [5, 10]
+            });
+        });
+        $(document).ready(function () {
+            $('#tableForReport2').DataTable({
+                lengthMenu: [5, 10]
+            });
+        });
+    </script>
+    @*<script>
+            window.onload = function () {
+                chart1 = new CanvasJS.Chart("chartContainer3", option3);
+                chart1.render();
+                chart2 = new CanvasJS.Chart("chartContainer2", option2);
+                chart2.render();
+                chart3 = new CanvasJS.Chart("chartContainer1", option1);
+                chart3.render();
+            }
+        </script>*@
+    <script src="~/MaterialPickDate/pikaday.js"></script>
+
+    <script>
+        var picker = new Pikaday(
+        {
+            field: document.getElementById('datestr'),
+        });
+        var picker1 = new Pikaday(
+    {
+        field: document.getElementById('dateend'),
+    });
+        var picker2 = new Pikaday(
+    {
+        field: document.getElementById('datestr1'),
+    });
+
+    </script>
+    <script>
+        $(function () {
+            $(".editforslotinday").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var id1 = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: '/UsingRooms/EditForIndexGet',
+                    contentType: "application/json; charset=utf-8",
+                    data: { idforedit: id1 },
+                    datatype: "json",
+                    success: function (data) {
+                        debugger;
+                        $('#myModalContent').html(data);
+                        $(".editsubmit").click(function () {
+                            // mới thêm
+                            debugger;
+
+                            var blaa = $('#idus').val();
+                            var bla = $('#idroom').val();
+                            var bla1 = $('#idslot').val();
+                            var bla2 = $('#iddate').val();
+                            var bla3 = $('#iddayofweek').val();
+                            var bla4 = $('#idclassid').val();
+                            var bla5 = $('#idusedfor').val();
+                            var bla6 = $('#idstatus').val();
+                            var bla7 = $('#idnote').val();
+                            //var $buttonClicked = $(this);
+                            //var id = $buttonClicked.attr('data-id');
+                            var options = { "backdrop": "static", keyboard: true };
+                            $.ajax({
+                                cache: false,
+                                type: "POST",
+                                url: '/UsingRooms/EditForIndexGet',
+                                data: { idd: blaa, idroom: bla, idslot: bla1, iddate: bla2, iddayofweek: bla3, idclassid: bla4, idusedfor: bla5, idstatus: bla6, idnote: bla7 },
+                                success: function (res) {
+                                    window.location.reload();
+                                },
+                                error: function () {
+                                    alert("Dynamic content load failed.");
+                                }
+                            });
+                        });
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+            //});
+            $(".EditRepresentImage").click(function () {
+                debugger;
+                var $buttonClicked = $(this);
+                var id = $buttonClicked.attr('data-id');
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: '/Contents/EditRepresentImage',
+                    contentType: "application/json; charset=utf-8",
+                    data: { "id": id },
+                    datatype: "json",
+                    success: function (data) {
+                        debugger;
+                        $('#myModalContent').html(data);
+                        $(document).ready(function () {
+                            $("#EditBrownButton").click(function () {
+                                var finder = new CKFinder();
+                                finder.selectActionFunction = function (fileUrl) {
+                                    //code js ở đây
+                                    $("#EditLinkOfImage").val(fileUrl);
+                                };
+                                finder.popup();
+                            });
+                        });
+                        //$('#myModal').modal(options);
+                        //$('#myModal').modal('show');
+                    },
+                    error: function () {
+                        alert("Dynamic content load failed.");
+                    }
+                });
+            });
+        });
+    </script>
+    <!-- End custom js for this page-->
+
+
+</body>
+
+</html>

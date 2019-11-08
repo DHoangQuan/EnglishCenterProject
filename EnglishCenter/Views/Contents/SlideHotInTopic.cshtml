@@ -1,0 +1,34 @@
+﻿@model IEnumerable<EnglishCenter.Models.Content>
+
+<div class="brick entry featured-grid animate-this">
+    <div class="entry-content">
+        <div id="featured-post-slider" class="flexslider">
+            <ul class="slides">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <div class="featured-post-slide">
+
+                            <div class="post-background" style="background-image:url('@item.RepresentImage');"></div>
+
+                            <div class="overlay"></div>
+
+                            <div class="post-content">
+                                <ul class="entry-meta">
+                                    <li>@Convert.ToDateTime(item.date_post.ToString()).ToShortDateString()</li>
+                                    <li><a href="#">@item.Person.Name</a></li>
+                                </ul>
+
+                                <h1 class="slide-title"><a href="single-standard.html" title="">@item.content_title</a></h1>
+                            </div>
+
+                        </div>
+                    </li>
+                }
+
+
+            </ul> <!-- end slides -->
+        </div> <!-- end featured-post-slider -->
+    </div> <!-- end entry content -->
+</div>
+

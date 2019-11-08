@@ -1,0 +1,55 @@
+﻿@model IEnumerable<EnglishCenter.Models.Quote>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BlogAdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Titlle)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContentQuote)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.Titlle)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.Author)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContentQuote)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.QuoteID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.QuoteID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.QuoteID })*@
+            <a href="@Url.Action("Set1", "Quotes", new { id = item.QuoteID })" class="btn btn-outline-primary btn-fw">1</a>
+            <a href="@Url.Action("Set2", "Quotes", new { id = item.QuoteID })" class="btn btn-outline-primary btn-fw">2</a>
+            <a href="@Url.Action("Off", "Quotes", new { id = item.QuoteID })" class="btn btn-outline-primary btn-fw">Off</a>
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,96 @@
+﻿@model IEnumerable<EnglishCenter.Models.UsingRoom>
+
+@{
+    int x;
+    if (Model.Count() == 0 || Model == null)
+            {
+        <h1>Have no class Here</h1>
+    }else
+    {
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class.Lesson.LessonName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Room.RoomNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Slot.SlotName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DayOfWeek)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UseFor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+    {
+        x = item.UsingRoomID;
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Class.Lesson.LessonName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Room.RoomNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Slot.SlotName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DayOfWeek)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UseFor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Notes)
+                        
+                    </td>
+                    <td>
+                        @*<a href="javascript:void(0);" class="schedule123" data-idforedit="@item.UsingRoomID" data-toggle="modal" data-target="#myModal">edit</a>*@
+                        @*@ViewBag.trans = @item.UsingRoomID;*@
+                        @*<a data-toggle="modal" href="#myModal1" data-idforedit="@item.UsingRoomID"  class="btn btn-primary">Edit</a>*@
+                        <a class="EditinPopup" data-idforedit="@item.UsingRoomID" data-target="#myModal1" data-toggle="modal" data-dismiss="modal">Edit</a>
+                        
+
+                        @*@using (Html.BeginForm("EditForIndexGet", "UsingRooms", FormMethod.Get, new { id = "searchForm" }))
+                        {
+
+                            <input type="number" name="idforedit" />
+                                <input type="submit" id="submit" value="Edit" />
+                        
+                        }*@
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.UsingRoomID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.UsingRoomID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.UsingRoomID })*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+     
+}
+
+

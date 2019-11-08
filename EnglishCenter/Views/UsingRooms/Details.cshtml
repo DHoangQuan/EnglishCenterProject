@@ -1,0 +1,74 @@
+﻿@model EnglishCenter.Models.UsingRoom
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UsingRoom</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Class.LessonID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Class.LessonID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Room.Floor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room.Floor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Slot.SlotName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Slot.SlotName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DayOfWeek)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DayOfWeek)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UseFor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UseFor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UsingRoomID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

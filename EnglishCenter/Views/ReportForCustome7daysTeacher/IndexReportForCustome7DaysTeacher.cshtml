@@ -1,0 +1,202 @@
+﻿@model IEnumerable<EnglishCenter.Models.ReportForCustome7daysTeacher>
+
+@*<div style="height:500px">
+        <div id="chartContainer1" style="margin-top: 20px"></div>
+    </div>*@
+<div class="col-lg-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Bar chart</h4>
+            <canvas id="barChart1" style="height:230px; width:500px;"></canvas>
+        </div>
+    </div>
+</div>
+<div class="table-edit" >
+    <table id="tableForReport2" class="table">
+        <thead class="table-cate-header">
+            <tr>
+                <th>
+                    <span>Teacher Name</span>
+                </th>
+                <th>
+                    <span>The number of slots teaching in 7 days</span>
+                </th>
+                <th>
+                    <span>Percentage of slots teaching in 7 days</span>
+                </th>
+                <th>
+                    <span>Teaching Reading/Slot</span>
+                </th>
+                <th>
+                    <span>Teaching Writing/Slot</span>
+                </th>
+                <th>
+                    <span>Teaching Listening/Slot</span>
+                </th>
+                <th>
+                    <span>Teaching speaking/Slot</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table-cate-header">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.teachingslotin7days)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.percentofteachingin7days)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.teachingreading)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.teachingwriting)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.teachinglistening)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.teachingspeaking)
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+    @*@Html.ActionLink("print report", "PrintViewToPdf")*@
+</div>
+@*<script>
+        var option1 =
+        {
+            theme: "theme2",
+            animationEnabled: true,
+            animationDuration: 2000,
+            //height: 500,
+            //width: 550,
+            title: {
+                text: "Percentage of Teaching from @Session["firstday"]",
+                maxWidth: 600,
+                margin: 20,
+            },
+            legend: {
+                fontSize: 15,
+                verticalAlign: "center",
+                horizontalAlign: "left",
+                itemWidth: 200,
+            },
+            data: [
+                {
+                    type: "pie",
+                    indexLabelFontSize: 15,
+                    indexLabel: "#percent%",
+                    percentFormatString: "#0.#",
+                    radius: "75%",
+                    showInLegend: true,
+                    legendText: "{label}",
+                    toolTipContent: "{label}: #percent%",
+                    dataPoints: [],
+                }
+            ]
+        };
+        @foreach(var item in Model){
+                @:option1.data[0].dataPoints.push({ label: "@item.Name", y: @item.teachingslotin7days});
+                            };
+
+    </script>*@
+<script>
+
+    function drawdata2(result) {
+        'use strict';
+        var label2 = [];
+        var dataNumber2 = [];
+
+        $.each(result.datapoint1, function (i, obj) {
+            label2.push(obj.Name);
+            dataNumber2.push(obj.teachingslotin7days);
+
+        });
+        var intToRGB = function (value, alpha, max) {
+            var valueAsPercentageOfMax = value / max;
+            var MAX_RGB_INT = 16600000;
+            var valueFromMaxRgbInt = Math.floor(MAX_RGB_INT * valueAsPercentageOfMax);
+
+            var blue = Math.floor(valueFromMaxRgbInt % 256);
+            var green = Math.floor(valueFromMaxRgbInt / 256 % 256);
+            var red = Math.floor(valueFromMaxRgbInt / 256 / 256 % 256);
+
+            return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
+        }
+        var MAX = 30;
+
+        var backgroundColors = dataNumber2.map(function (item) {
+            return intToRGB(item, 0.2, MAX);
+        });
+
+        var borderColors = dataNumber2.map(function (item) {
+            return intToRGB(item, 1, MAX);
+        });
+        var data1 = {
+            labels: label2,
+            datasets: [{
+                label: '# of Votes',
+                data: dataNumber2,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+
+                borderWidth: 1,
+                fill: false
+            }]
+        };
+        var options2 = {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            },
+            elements: {
+                point: {
+                    radius: 0
+                }
+            }
+
+        };
+        if ($("#barChart1").length) {
+            var barChartCanvas = $("#barChart1").get(0).getContext("2d");
+            // This will get the first returned node in the jQuery collection.
+            var barChart = new Chart(barChartCanvas, {
+                type: 'bar',
+                data: data1,
+                options: options2
+            });
+        }
+    }
+    $(function () {
+        $.ajax({
+            url: '/ReportForCustome7daysTeacher/IndexReportForCustome7DaysTeacher1234',
+            dataType: "json",
+            contentType: "application/json",
+            type: "GET",
+            success: function (result) {
+                //console.log(result);
+                //console.log(result.datapoint.length)
+                drawdata2(result);
+            }
+
+        })
+        /* ChartJS
+         * -------
+         * Data and config for chartjs
+         */
+
+    });
+</script>

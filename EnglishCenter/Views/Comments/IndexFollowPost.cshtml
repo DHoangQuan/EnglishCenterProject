@@ -1,0 +1,57 @@
+﻿@model IEnumerable<EnglishCenter.Models.Comment>
+@*@{*@
+    @*if (Model == null)
+        {
+            <h3>@ViewBag.notification</h3>
+        }
+        else
+        {*@
+    <h3>@Model.Count() Comments</h3>
+
+        <!-- commentlist -->
+        <ol class="commentlist" v-for="com in comments">
+            @foreach (var item in Model)
+                {
+            <li class="depth-1">
+
+                <div class="avatar">
+                    @if (item.Person.Image == null || item.Person.Image == "")
+                        {
+                            <img width="50" height="50" class="avatar" src="~/MaterialBlogTemplate/images/NoneImage.png" alt="">
+
+                        }
+                        else
+                        {
+                        <img width="50" height="50" class="avatar" src="@item.Person.Image" alt="">
+                        }
+                    @*{{com.Person.Image}}*@
+                </div>
+
+
+                <div class="comment-content">
+
+                    <div class="comment-info">
+                        <cite>@item.Person.Name</cite>
+                        @*<cite>{{com.Person.Name}}</cite>*@
+
+                        <div class="comment-meta">
+                            @*<time class="comment-time">{{com.comment_date}}</time>*@
+                            <time class="comment-time" >@item.comment_date</time>
+                            @*<span class="sep">/</span><a class="reply" href="#">Reply</a>*@
+                        </div>
+                    </div>
+
+                    <div class="comment-text">
+                        <p>
+                            @item.comment_content
+                            
+                        </p>
+                    </div>
+
+                </div>
+
+            </li>
+            }
+        </ol>
+        }
+            @*}*@

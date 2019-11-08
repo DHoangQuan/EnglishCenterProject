@@ -1,0 +1,42 @@
+﻿@model IEnumerable<EnglishCenter.Models.UsingRoom>
+@Html.Raw(TempData["NoClass"])
+@{
+    ViewBag.Title = "IndexTest";
+}
+
+@*<h2>IndexTest</h2>*@
+<div style="margin-bottom:5px;">
+    <h2>This field uses for creating the same number of classes in a range of the date.</h2>
+    <form action="@Url.Action("CreateAutoAllSlot", "UsingRooms")" method="post">
+        <div class="row" style="margin-top:5px;">
+            <span style="margin-left:22px;">From date: </span>
+            <input class="form-control" style="width:200px;margin-left:82px;" type="datetime" id="datestr" name="datestr" />
+        </div>
+        <div class="row">
+            <span style="margin-left:22px;">To date: </span>
+            <input class="form-control" style="width:200px;margin-left:102px;margin-top:5px;margin-bottom:5px;" type="datetime" id="dateend" name="dateend" />
+        </div>
+        <div class="row" style="margin-bottom:5px;">
+            <span style="margin-left:22px;">The number of class: </span>
+            <input class="form-control" style="width:200px;margin-left: 10px;" type="number" name="numberofslot" /> <span style="color:red;">(Do not input more than the number of the room)</span>
+        </div>
+        <div>
+            <button class="btn btn-gradient-info btn-fw" style="width:362px;" type="submit" onclick="return confirm('Are you sure?');">Create</button>
+        </div>
+    </form>
+</div>
+<div style="margin-top:100px;">
+    <h2>This field uses for customization of the number of rooms in seven days.</h2>
+    <form action="@Url.Action("CustomeCreate", "UsingRooms")" method="get">
+        <div>
+            <span>Choosen any date in a week that you want to manage or create</span>
+            <input style="width:300px; margin-top:5px;margin-bottom:5px;" class="form-control" type="datetime" id="datestr1" name="datestr1" />
+        </div>    
+    @*<input type="datetime" readonly="readonly" id="dateren" name="dateren" />*@
+        <button class="btn btn-gradient-info btn-fw" style="width:362px;" type="submit">Go for Managing</button>
+    </form>
+</div>
+@*@Session["count"]<br />
+        @Session["count1"]<br />
+    @Session["count2"]<br />
+    @Session["count3"]<br />*@

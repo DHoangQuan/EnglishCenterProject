@@ -1,0 +1,43 @@
+﻿@model EnglishCenter.Models.StudentTime
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StudentTime</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Person.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Person.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Studied)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Studied)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Future)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Future)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

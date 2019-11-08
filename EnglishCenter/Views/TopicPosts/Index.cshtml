@@ -1,0 +1,46 @@
+﻿@model IEnumerable<EnglishCenter.Models.TopicPost>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_BlogAdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Catalogue.CatalogueName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TopicName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PinToBar)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Catalogue.CatalogueName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TopicName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PinToBar)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TopicPostID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TopicPostID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TopicPostID })
+        </td>
+    </tr>
+}
+
+</table>

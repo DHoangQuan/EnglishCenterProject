@@ -1,0 +1,10 @@
+﻿@using EnglishCenter.Models;
+@model List<TopicPost>
+
+@foreach (var item in Model)
+            {
+    @*<a href="@Url.Action("BrandCus", new {@id=item.BrandID })"> @item.BName</a>*@
+
+    <li><a href="@Url.Action("IndexTopicPostClient","Contents", new {id=item.TopicPostID })" title="">@item.TopicName</a></li>
+}
+

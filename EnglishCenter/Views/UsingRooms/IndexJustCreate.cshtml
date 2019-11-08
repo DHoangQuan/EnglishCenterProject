@@ -1,0 +1,71 @@
+﻿@model IEnumerable<EnglishCenter.Models.UsingRoom>
+<button id="button" style="width:400px;" class="btn btn-gradient-dark btn-rounded btn-fw">Show or Hide table Just Create in Seven days</button>
+<br />
+<br />
+<table class="table" id="table1" >
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Class.Lesson.LessonName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Room.RoomNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slot.SlotName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DayOfWeek)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UseFor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.Lesson.LessonName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.RoomNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slot.SlotName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DayOfWeek)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UseFor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.UsingRoomID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.UsingRoomID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.UsingRoomID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,43 @@
+﻿@model EnglishCenter.Models.TopicPost
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_BlogAdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TopicPost</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Catalogue.CatalogueName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Catalogue.CatalogueName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TopicName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TopicName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PinToBar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PinToBar)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TopicPostID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

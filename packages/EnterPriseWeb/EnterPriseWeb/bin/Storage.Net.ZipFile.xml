@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Storage.Net.ZipFile</name>
+    </assembly>
+    <members>
+        <member name="T:Storage.Net.Factory">
+            <summary>
+            Factory helpers
+            </summary>
+        </member>
+        <member name="M:Storage.Net.Factory.ZipFile(Storage.Net.IBlobStorageFactory,System.String)">
+            <summary>
+            Zip file
+            </summary>
+        </member>
+    </members>
+</doc>

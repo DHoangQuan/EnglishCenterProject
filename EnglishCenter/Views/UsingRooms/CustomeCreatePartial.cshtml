@@ -1,0 +1,112 @@
+﻿@model IEnumerable<EnglishCenter.Models.UsingRoom>
+@Html.Raw(TempData["NoClass"])
+
+
+
+<form action="@Url.Action("CustomeCreate", "UsingRooms")" method="post">
+    @*<input type="datetime" id="date" name="date" />*@
+    <h3> number of the Rooms: @ViewBag.numberofrooms</h3>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Slot Name</th>
+                <th scope="col">First Day<br />@Session["firstday"]<br />@Session["DayOfWeekfirstday"]</th>
+                <th scope="col">Second Day<br />@Session["Secondday"]<br />@Session["DayOfWeekSecondday"]</th>
+                <th scope="col">Third Day<br />@Session["Thirdday"]<br />@Session["DayOfWeekThirdday"]</th>
+                <th scope="col">Fourth Day<br />@Session["Fourthday"]<br />@Session["DayOfWeekFourthday"]</th>
+                <th scope="col">Fifth Day<br />@Session["Fifthday"]<br />@Session["DayOfWeekFifthday"]</th>
+                <th scope="col">Sixth Day<br />@Session["Sixthday"]<br />@Session["DayOfWeekSixthday"]</th>
+                <th scope="col">Seventh Day<br />@Session["Seventhday"]<br />@Session["DayOfWeekSeventhday"]</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+
+                <th scope="row">Slot 1</th>
+
+                <td>Contain Rooms: @ViewBag.slot1infd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT01", date= Session["firstday"]})">View Class</a><br /><input class="form-control" type="number" name="slot1fd" /></td>
+                <td>Contain Rooms: @ViewBag.slot1insnd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT01", date= Session["Secondday"]})">View Class</a><br /><input class="form-control" type="number" name="slot1snd" /></td>
+                <td>Contain Rooms: @ViewBag.slot1inthrd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT01", date= Session["Thirdday"]})">View Class</a><br /><input class="form-control" type="number" name="slot1thrd" /></td>
+                <td>Contain Rooms: @ViewBag.slot1infrth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT01", date= Session["Fourthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot1frth" /></td>
+                <td>Contain Rooms: @ViewBag.slot1inffth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT01", date= Session["Fifthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot1ffth" /></td>
+                <td>Contain Rooms: @ViewBag.slot1insth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT01", date= Session["Sixthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot1sth" /></td>
+                <td>Contain Rooms: @ViewBag.slot1insvth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT01", date= Session["Seventhday"]})">View Class</a><br /><input class="form-control" type="number" name="slot1svth" /></td>
+            </tr>
+            <tr>
+                <th scope="row">Slot 2</th>
+                <td>Contain Rooms: @ViewBag.slot2infd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT02", date= Session["firstday"]})">View Class</a><br /><input class="form-control" type="number" name="slot2fd" /></td>
+                <td>Contain Rooms: @ViewBag.slot2insnd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT02", date= Session["Secondday"]})">View Class</a><br /><input class="form-control" type="number" name="slot2snd" /></td>
+                <td>Contain Rooms: @ViewBag.slot2inthrd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT02", date= Session["Thirdday"]})">View Class</a><br /><input class="form-control" type="number" name="slot2thrd" /></td>
+                <td>Contain Rooms: @ViewBag.slot2infrth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT02", date= Session["Fourthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot2frth" /></td>
+                <td>Contain Rooms: @ViewBag.slot2inffth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT02", date= Session["Fifthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot2ffth" /></td>
+                <td>Contain Rooms: @ViewBag.slot2insth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT02", date= Session["Sixthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot2sth" /></td>
+                <td>Contain Rooms: @ViewBag.slot2insvth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT02", date= Session["Seventhday"]})">View Class</a><br /><input class="form-control" type="number" name="slot2svth" /></td>
+            </tr>
+            <tr>
+                <th scope="row">Slot 3</th>
+                <td>Contain Rooms: @ViewBag.slot3infd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT03", date= Session["firstday"]})">View Class</a><br /><input class="form-control" type="number" name="slot3fd" /></td>
+                <td>Contain Rooms: @ViewBag.slot3insnd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT03", date= Session["Secondday"]})">View Class</a><br /><input class="form-control" type="number" name="slot3snd" /></td>
+                <td>Contain Rooms: @ViewBag.slot3inthrd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT03", date= Session["Thirdday"]})">View Class</a><br /><input class="form-control" type="number" name="slot3thrd" /></td>
+                <td>Contain Rooms: @ViewBag.slot3infrth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT03", date= Session["Fourthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot3frth" /></td>
+                <td>Contain Rooms: @ViewBag.slot3inffth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT03", date= Session["Fifthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot3ffth" /></td>
+                <td>Contain Rooms: @ViewBag.slot3insth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT03", date= Session["Sixthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot3sth" /></td>
+                <td>Contain Rooms: @ViewBag.slot7insvth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT03", date= Session["Seventhday"]})">View Class</a><br /><input class="form-control" type="number" name="slot3svth" /></td>
+            </tr>
+            <tr>
+                <th scope="row">Slot 4</th>
+                <td>Contain Rooms: @ViewBag.slot4infd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT04", date= Session["firstday"]})">View Class</a><br /><input class="form-control" type="number" name="slot4fd" /></td>
+                <td>Contain Rooms: @ViewBag.slot4insnd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT04", date= Session["Secondday"]})">View Class</a><br /><input class="form-control" type="number" name="slot4snd" /></td>
+                <td>Contain Rooms: @ViewBag.slot4inthrd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT04", date= Session["Thirdday"]})">View Class</a><br /><input class="form-control" type="number" name="slot4thrd" /></td>
+                <td>Contain Rooms: @ViewBag.slot4infrth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT04", date= Session["Fourthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot4frth" /></td>
+                <td>Contain Rooms: @ViewBag.slot4inffth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT04", date= Session["Fifthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot4ffth" /></td>
+                <td>Contain Rooms: @ViewBag.slot4insth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT04", date= Session["Sixthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot4sth" /></td>
+                <td>Contain Rooms: @ViewBag.slot4insvth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT04", date= Session["Seventhday"]})">View Class</a><br /><input class="form-control" type="number" name="slot4svth" /></td>
+            </tr>
+            <tr>
+                <th scope="row">Slot 5</th>
+                <td>Contain Rooms: @ViewBag.slot5infd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT05", date= Session["firstday"]})">View Class</a><br /><input class="form-control" type="number" name="slot5fd" /></td>
+                <td>Contain Rooms: @ViewBag.slot5insnd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT05", date= Session["Secondday"]})">View Class</a><br /><input class="form-control" type="number" name="slot5snd" /></td>
+                <td>Contain Rooms: @ViewBag.slot5inthrd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT05", date= Session["Thirdday"]})">View Class</a><br /><input class="form-control" type="number" name="slot5thrd" /></td>
+                <td>Contain Rooms: @ViewBag.slot5infrth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT05", date= Session["Fourthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot5frth" /></td>
+                <td>Contain Rooms: @ViewBag.slot5inffth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT05", date= Session["Fifthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot5ffth" /></td>
+                <td>Contain Rooms: @ViewBag.slot5insth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT05", date= Session["Sixthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot5sth" /></td>
+                <td>Contain Rooms: @ViewBag.slot5insvth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT05", date= Session["Seventhday"]})">View Class</a><br /><input class="form-control" type="number" name="slot5svth" /></td>
+            </tr>
+            <tr>
+                <th scope="row">Slot 6</th>
+                <td>Contain Rooms: @ViewBag.slot6infd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT06", date= Session["firstday"]})">View Class</a><br /><input class="form-control" type="number" name="slot6fd" /></td>
+                <td>Contain Rooms: @ViewBag.slot6insnd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT06", date= Session["Secondday"]})">View Class</a><br /><input class="form-control" type="number" name="slot6snd" /></td>
+                <td>Contain Rooms: @ViewBag.slot6inthrd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT06", date= Session["Thirdday"]})">View Class</a><br /><input class="form-control" type="number" name="slot6thrd" /></td>
+                <td>Contain Rooms: @ViewBag.slot6infrth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT06", date= Session["Fourthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot6frth" /></td>
+                <td>Contain Rooms: @ViewBag.slot6inffth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT06", date= Session["Fifthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot6ffth" /></td>
+                <td>Contain Rooms: @ViewBag.slot6insth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT06", date= Session["Sixthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot6sth" /></td>
+                <td>Contain Rooms: @ViewBag.slot6insvth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT06", date= Session["firstday"]})">View Class</a><br /><input class="form-control" type="number" name="slot6svth" /></td>
+            </tr>
+            <tr>
+                <th scope="row">Slot 7</th>
+                <td>Contain Rooms: @ViewBag.slot7infd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT07", date= Session["firstday"]})">View Class</a><br /><input class="form-control" type="number" name="slot7fd" /></td>
+                <td>Contain Rooms: @ViewBag.slot7insnd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT07", date= Session["Secondday"]})">View Class</a><br /><input class="form-control" type="number" name="slot7snd" /></td>
+                <td>Contain Rooms: @ViewBag.slot7inthrd<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT07", date= Session["Thirdday"]})">View Class</a><br /><input class="form-control" type="number" name="slot7thrd" /></td>
+                <td>Contain Rooms: @ViewBag.slot7infrth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT07", date= Session["Fourthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot7frth" /></td>
+                <td>Contain Rooms: @ViewBag.slot7inffth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT07", date= Session["Fifthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot7ffth" /></td>
+                <td>Contain Rooms: @ViewBag.slot7insth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT07", date= Session["Sixthday"]})">View Class</a><br /><input class="form-control" type="number" name="slot7sth" /></td>
+                <td>Contain Rooms: @ViewBag.slot7insvth<br /><a href="@Url.Action("PartialIndex", "UsingRooms", new { slot ="SLOT07", date= Session["Seventhday"]})">View Class</a><br /><input class="form-control" type="number" name="slot7svth" /></td>
+            </tr>
+            <tr>
+                <td><button value="submit" class="btn btn-gradient-info btn-fw">Submit</button></td>
+
+            </tr>
+        </tbody>
+    </table>
+</form>
+<h4>From: @Session["firstday"]</h4>
+<h4>To: @Session["Seventhday"]</h4>
+@Html.Action("IndexReportForCustome7DaysSkill", "ReportForCustome7Days")
+@Html.Action("IndexReportForCustome7DaysLessons", "ReportForCustome7DaysLessons")
+@Html.Action("IndexReportForCustome7DaysTeacher", "ReportForCustome7daysTeacher")
+@Html.Action("IndexJustCreate", "UsingRooms")
+@Html.Action("IndexForSevenDay", "UsingRooms")
+
+
+

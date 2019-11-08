@@ -1,0 +1,124 @@
+﻿@model IEnumerable<EnglishCenter.Models.UsingRoom>
+
+<div class="cd-schedule-modal__event-info">
+    <div>
+        @if (Session["RoleID"].ToString() != "ROLE05")
+        {
+            <a href="@Url.Action("CustomeCreate", "UsingRooms", new { datestr1 = Convert.ToDateTime(Session["Monday"].ToString()) })">Managing for this week</a>
+        }
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class.Person.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Class.ClassName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Room.RoomNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Slot.SlotName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DayOfWeek)
+                </th>
+                <th>
+                    <span>Skill</span>
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.Notes)
+                    </th>*@
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Class.Person.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Class.ClassName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Room.RoomNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Slot.SlotName)
+                    </td>
+                    <td>
+                        <span>@Convert.ToDateTime(item.Date.ToString()).ToShortDateString()</span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DayOfWeek)
+                    </td>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.Class.Lesson.Topic.Skill.Name)
+
+                    </td>
+                    <td>
+                        @{
+
+                            var isSignUp = false;
+                            var lockState = false;
+                            var lockStateJoin = false;
+                            foreach (var list in ViewBag.listcheck)
+                            {
+                                var timeLeft = (list.DateTime - DateTime.Now).TotalHours;
+                                if (item.UsingRoomID == list.UsingRoomID)
+                                {
+                                    isSignUp = true;
+                                    if (timeLeft < 24)
+                                    {
+                                        lockState = true;
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    if (timeLeft <= 0)
+                                    {
+                                        lockStateJoin = true;
+                                    }
+                                }
+                            }
+                            if (isSignUp && !lockState)
+                            {
+                                @*<h3>Cancel</h3>*@
+                                <a href="@Url.Action("CancelUSR", "QuantityAndAttendances", new { usrid = item.UsingRoomID, peopleid = @Session["PersonID"], date = item.Date })" class="btn btn-primary" onclick="return confirm('Do you want to cancel the class')">Cancel</a>
+                            }
+                            else if (isSignUp && lockState)
+                            {
+                                <h3></h3>
+                            }
+                            else if (item.QuatityRegister > item.Class.QuantityMAX)
+                            {
+                                <h3>Full</h3>
+                            }
+                            else if (item.QuatityRegister < item.Class.QuantityMAX)
+                            {
+                                if (!lockStateJoin)
+                                {
+                                    <a href="@Url.Action("RegisterClass", "QuantityAndAttendances", new { usrid = item.UsingRoomID , peopleid = @Session["PersonID"], date = item.Date })" class="btn btn-primary" onclick="return confirm('Do you want to join this class?')">Join</a>
+                                    //<a href="@Url.Action("RegisterClass", "QuantityAndAttendances", new { usrid = item.UsingRoomID, peopleid = "P02", date = item.Date })" class="btn btn-primary" onclick="return confirm('Do you want to joi this class?')">Join</a>
+                                }
+                                else
+                                {
+                                    <h3>overtime</h3>
+                                }
+                            }
+                        }
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.UsingRoomID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.UsingRoomID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.UsingRoomID })*@
+                    </td>
+                </tr>
+                            }
+        </table>
+    </div>
+</div>

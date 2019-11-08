@@ -1,0 +1,276 @@
+﻿@using EnglishCenter.Models
+@model List<ReportForStudentTimes>
+@{
+    ViewBag.Title = "ReportStudentTime1";
+
+}
+<h2>Welcome @Session["RoleName"].ToString() @Session["PersonName"].ToString()</h2>
+<form action="@Url.Action("ReportStudentTime1", "StudentTimes")" method="post">
+    <div>
+        <span>input year</span>
+        <input style="width:300px; margin-top:5px;margin-bottom:5px;" class="form-control" type="text" name="year" />
+    </div>
+    @*<input type="datetime" readonly="readonly" id="dateren" name="dateren" />*@
+    <button class="btn btn-gradient-info btn-fw" style="width:300px;" type="submit">See Report</button>
+</form>
+<div class="table-edit">
+    <table class="table">
+        <thead class="table-cate-header">
+            <tr>
+                <th>
+                    <h1>
+                        <span>
+                            Year
+                        </span>
+                    </h1>
+                </th>
+                <th>
+                    <span>
+                        Average per month
+                    </span>
+                </th>
+                <th>
+                    <span>Studied Slots In This Year</span>
+                </th>
+                <th>
+                    <span>January</span>
+                </th>
+                <th>
+                    <span>Febuary</span>
+                </th>
+                <th>
+                    <span>March</span>
+                </th>
+                <th>
+                    <span>April</span>
+                </th>
+                <th>
+                    <span>May</span>
+                </th>
+                <th>
+                    <span>June</span>
+                </th>
+                <th>
+                    <span>July</span>
+                </th>
+                <th>
+                    <span>August</span>
+                </th>
+                <th>
+                    <span>September</span>
+                </th>
+                <th>
+                    <span>October</span>
+                </th>
+                <th>
+                    <span>November</span>
+                </th>
+                <th>
+                    <span>December</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="table-cate-header">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <h1>
+                            <span>
+                                @item.Year
+                            </span>
+                        </h1>
+                    </td>
+                    <td>
+                        <span>
+                            @item.StudentAverageTimes
+                        </span>
+                    </td>
+                    <td>
+
+                        <span>@item.TotalTime</span>
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 1)
+                        {
+                            <h1><span style="color:silver;">@item.StudentTimesJan</span></h1>
+                        }
+                        else if (DateTime.Now.Month == 1)
+                        {
+                            <h1><span style="color:orange;">@item.StudentTimesJan</span></h1>
+                        }
+                        else
+                        {
+                            <h1><span style="color:green;">@item.StudentTimesJan</span></h1>
+                        }
+                        @*<span>@item.StudentTimesJan</span>*@
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 2)
+                        {
+                            <h1><span style="color:silver;">@item.StudentTimesFeb</span></h1>
+                        }
+                        else if (DateTime.Now.Month == 2)
+                        {
+                            <h1><span style="color:orange;">@item.StudentTimesFeb</span></h1>
+                        }
+                        else
+                        {
+                            <h1><span style="color:green;">@item.StudentTimesFeb</span></h1>
+                        }
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 3)
+                        {
+                            <h1><span style="color:silver;">@item.StudentTimesMar</span></h1>
+                        }
+                        else if (DateTime.Now.Month == 3)
+                        {
+                            <h1> <span style="color:orange;">@item.StudentTimesMar</span></h1>
+                        }
+                        else
+                        {
+                            <h1><span style="color:green;">@item.StudentTimesMar</span></h1>
+                        }
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 4)
+                        {
+                            <h1><span style="color:silver;">@item.StudentTimesApr</span></h1>
+                        }
+                        else if (DateTime.Now.Month == 4)
+                        {
+                            <h1><span style="color:orange;">@item.StudentTimesApr</span></h1>
+                        }
+                        else
+                        {
+                            <h1><span style="color:green;">@item.StudentTimesApr</span></h1>
+                        }
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 5)
+                        {
+                            <h1><span style="color:silver;">@item.StudentTimesMay</span></h1>
+                        }
+                        else if (DateTime.Now.Month == 5)
+                        {
+                            <h1><span style="color:orange;">@item.StudentTimesMay</span></h1>
+                        }
+                        else
+                        {
+                            <h1><span style="color:green;">@item.StudentTimesMay</span></h1>
+                        }
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 6)
+                        {
+                            <h1><span style="color:silver;">@item.StudentTimesJune</span></h1>
+                        }
+                        else if (DateTime.Now.Month == 6)
+                        {
+                            <h1><span style="color:orange;">@item.StudentTimesJune</span></h1>
+                        }
+                        else
+                        {
+                            <h1><span style="color:green;">@item.StudentTimesJune</span></h1>
+                        }
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 7)
+                        {
+                            <h1><span style="color:silver;">@item.StudentTimesJuly</span></h1>
+                        }
+                        else if (DateTime.Now.Month == 7)
+                        {
+                            <h1><span style="color:orange;">@item.StudentTimesJuly</span></h1>
+                        }
+                        else
+                        {
+                            <h1><span style="color:green;">@item.StudentTimesJuly</span></h1>
+                        }
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 8)
+                        {
+                            <h1>
+                                <span style="color:silver;">@item.StudentTimesAug</span>
+                            </h1>
+                        }
+                        else if (DateTime.Now.Month == 8)
+                        {
+                            <h1>
+                                <span style="color:orange;">@item.StudentTimesAug</span>
+                            </h1>
+                        }
+                        else
+                        {
+                            <h1>
+                                <span style="color:green;">@item.StudentTimesAug</span>
+                            </h1>
+                        }
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 9)
+                        {
+                            <h1><span style="color:silver;">@item.StudentTimesSep</span></h1>
+                        }
+                        else if (DateTime.Now.Month == 9)
+                        {
+                            <h1><span style="color:orange;">@item.StudentTimesSep</span></h1>
+                        }
+                        else
+                        {
+                            <h1><span style="color:green;">@item.StudentTimesSep</span></h1>
+                        }
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 10)
+                        {
+                            <h1><span style="color:silver;">@item.StudentTimesOct</span></h1>
+                        }
+                        else if (DateTime.Now.Month == 10)
+                        {
+                            <h1><span style="color:orange;">@item.StudentTimesOct</span></h1>
+                        }
+                        else
+                        {
+                            <h1><span style="color:green;">@item.StudentTimesOct</span></h1>
+                        }
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 11)
+                        {
+                            <h1><span style="color:silver;">@item.StudentTimesNov</span></h1>
+                        }
+                        else if (DateTime.Now.Month == 11)
+                        {
+                            <h1><span style="color:orange;">@item.StudentTimesNov</span></h1>
+                        }
+                        else
+                        {
+                            <h1><span style="color:green;">@item.StudentTimesNov</span></h1>
+                        }
+                    </td>
+                    <td>
+                        @if (DateTime.Now.Month > 12)
+                        {
+                            <h1><span style="color:silver;">@item.StudentTimesDec</span></h1>
+                        }
+                        else if (DateTime.Now.Month == 12)
+                        {
+                            <h1><span style="color:orange;">@item.StudentTimesDec</span></h1>
+                        }
+                        else
+                        {
+                            <h1><span style="color:green;">@item.StudentTimesDec</span></h1>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+@Html.Action("ReportStudentTimeSkill", "StudentTimes", new { year = Convert.ToInt32(Session["ParaForReportStudentTime1Year"].ToString()), idstudent = Session["DetailsPersonID"].ToString() })
+@Html.Action("DetailsPartial", "People", new { id = Session["DetailsPersonID"].ToString() })
+

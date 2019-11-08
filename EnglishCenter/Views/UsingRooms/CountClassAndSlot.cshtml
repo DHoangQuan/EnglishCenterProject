@@ -1,0 +1,766 @@
+﻿@using EnglishCenter.Models
+@model List<WeekContainClassAndSlot>
+    @{ 
+        Layout = null;
+    }
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.getElementsByTagName("html")[0].className += " js";</script>
+    <link rel="stylesheet" href="~/MaterialSchedule/assets/css/style.css">
+    <title>Schedule Template | CodyHouse</title>
+    <link rel="stylesheet" href="~/MaterialPickDate/css/pikaday.css">
+    <link rel="stylesheet" href="~/MaterialPickDate/css/site.css">
+    <script src="//code.jquery.com/jquery.js"></script>
+</head>
+<body>
+    @Html.Raw(TempData["notification"])
+    <header class="cd-main-header text-center flex flex-column flex-center">
+        <form action="@Url.Action("Calculate1", "UsingRooms")" method="post">
+            <input type="datetime" id="date" name="date" />
+            <button type="submit">Submit</button>
+        </form>
+        @if (Session["RoleID"].ToString() != "ROLE05")
+        {
+            <a href="@Url.Action("CustomeCreate", "UsingRooms", new { datestr1 = Convert.ToDateTime(Session["Monday"].ToString()) })">Managing for this week</a>
+        }
+        <a href="@Url.Action("Index", "Skills")" >Back to Menu</a>
+</header>
+
+    <div class="cd-schedule cd-schedule--loading margin-top-lg margin-bottom-lg js-cd-schedule">
+        <div class="cd-schedule__timeline">
+            <ul>
+                <li><span>09:00</span></li>
+                <li><span>09:30</span></li>
+                <li><span>10:00</span></li>
+                <li><span>10:30</span></li>
+                <li><span>11:00</span></li>
+                <li><span>11:30</span></li>
+                <li><span>12:00</span></li>
+                <li><span>12:30</span></li>
+                <li><span>13:00</span></li>
+                <li><span>13:30</span></li>
+                <li><span>14:00</span></li>
+                <li><span>14:30</span></li>
+                <li><span>15:00</span></li>
+                <li><span>15:30</span></li>
+                <li><span>16:00</span></li>
+                <li><span>16:30</span></li>
+                <li><span>17:00</span></li>
+                <li><span>17:30</span></li>
+                <li><span>18:00</span></li>
+                <li><span>18:30</span></li>
+                <li><span>19:00</span></li>
+                <li><span>19:30</span></li>
+                <li><span>20:00</span></li>
+                <li><span>20:30</span></li>
+                <li><span>21:00</span></li>
+            </ul>
+        </div> <!-- .cd-schedule__timeline -->
+
+        <div class="cd-schedule__events">
+            <ul>
+                @Html.Raw(TempData["NoClass"])
+
+                <li class="cd-schedule__group">
+
+                    <div class="cd-schedule__top-info"><span>Monday<br />@Session["Monday"]</span></div>
+
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            ViewBag.fd = item.Date.ToShortDateString();
+                            if (item.DayOfWeek == "Monday" && item.NumberofClassUsingRoom != 0)
+                            {
+
+                                <li class="cd-schedule__event">
+                                    <a class="schedule" data-slot="@item.SlotID" data-tim="@item.Date" data-content="@Url.Action("IndexGet","UsingRooms")" data-start="@item.TimeStart" data-end="@item.TimeEnd" data-event="event-5" href="#0">
+                                        @if (item.SlotID == "SLOT01" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount1" style="color:red;"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT02" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount2" style="color:red;"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT03" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount3" style="color:red;"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT04" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount4" style="color:red;"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT05" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount5" style="color:red;"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT06" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount6" style="color:red;"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT07" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount7" style="color:red;"><em class="cd-schedule__name"></em></h5>
+                                        }
+
+                                        @if (item.NumberofClassUsingRoom == 1)
+                                        {
+                                            <h5>
+                                                <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom class</em>
+                                            </h5>
+                                        }
+                                        else
+                                        {
+                                            <h5>
+                                                <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom classes</em>
+                                            </h5>
+                                        }
+                                        @if (item.numberofreadingskill != 0)
+                                        {
+                                            <h5><em class="cd-schedule__name">@item.numberofreadingskill Reading</em></h5>
+
+                                        }
+                                        @if (item.numberofwritingskill != 0)
+                                        {
+                                            <h5><em class="cd-schedule__name">@item.numberofwritingskill Wringting</em></h5>
+
+                                        }
+                                        @if (item.numeberoflisteningskill != 0)
+                                        {
+                                            <h5><em class="cd-schedule__name">@item.numeberoflisteningskill Listening</em></h5>
+                                        }
+                                        @if (item.numberofspeakingskill != 0)
+                                        {
+                                            <h5>   <em class="cd-schedule__name">@item.numberofspeakingskill Speaking</em></h5>
+                                        }
+
+
+                                    </a>
+                                </li>
+                            }
+
+
+
+                        }
+                    </ul>
+                </li>
+
+
+                <li class="cd-schedule__group">
+                    <div class="cd-schedule__top-info"><span>Tuesday<br />@Session["Tuesday"]</span></div>
+
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            if (item.DayOfWeek == "Tuesday" && item.NumberofClassUsingRoom != 0)
+                            {
+                                <li class="cd-schedule__event">
+                                    <a class="schedule" data-slot="@item.SlotID" data-tim="@item.Date" data-start="@item.TimeStart" data-end="@item.TimeEnd" data-content="@Url.Action("IndexGet","UsingRooms")" data-event="event-6" href="#0">
+                                        @if (item.SlotID == "SLOT01" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount8"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT02" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount9"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT03" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount10"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT04" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount11"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT05" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount12"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT06" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount13"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT07" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount14"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.NumberofClassUsingRoom == 1)
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom class</em>
+                                        }
+                                        else
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom classes</em>
+                                        }
+                                        @if (item.numberofreadingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofreadingskill Reading</em>
+                                        }
+                                        @if (item.numberofwritingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofwritingskill Wringting</em>
+                                        }
+                                        @if (item.numeberoflisteningskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numeberoflisteningskill Listening</em>
+                                        }
+                                        @if (item.numberofspeakingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofspeakingskill Speaking</em>
+                                        }
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+
+
+                <li class="cd-schedule__group">
+                    <div class="cd-schedule__top-info"><span>Wednesday<br />@Session["Wednesday"]</span></div>
+
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            if (item.DayOfWeek == "Wednesday" && item.NumberofClassUsingRoom != 0)
+                            {
+                                <li class="cd-schedule__event">
+                                    <a class="schedule" data-slot="@item.SlotID" data-tim="@item.Date" data-start="@item.TimeStart" data-end="@item.TimeEnd" data-content="@Url.Action("IndexGet","UsingRooms")" data-event="event-7" href="#0">
+                                        @if (item.SlotID == "SLOT01" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount15"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT02" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount16"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT03" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount17"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT04" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount18"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT05" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount19"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT06" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount20"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT07" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount21"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.NumberofClassUsingRoom == 1)
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom class</em>
+                                        }
+                                        else
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom classes</em>
+                                        }
+                                        @if (item.numberofreadingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofreadingskill Reading</em>
+                                        }
+                                        @if (item.numberofwritingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofwritingskill Wringting</em>
+                                        }
+                                        @if (item.numeberoflisteningskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numeberoflisteningskill Listening</em>
+                                        }
+                                        @if (item.numberofspeakingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofspeakingskill Speaking</em>
+                                        }
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+
+                <li class="cd-schedule__group">
+                    <div class="cd-schedule__top-info"><span>Thursday<br />@Session["Thursday"]</span></div>
+
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            if (item.DayOfWeek == "Thursday" && item.NumberofClassUsingRoom != 0)
+                            {
+                                <li class="cd-schedule__event">
+                                    <a class="schedule" data-slot="@item.SlotID" data-tim="@item.Date" data-start="@item.TimeStart" data-end="@item.TimeEnd" data-content="@Url.Action("IndexGet","UsingRooms")" data-event="event-8" href="#0">
+                                        @if (item.SlotID == "SLOT01" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount22"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT02" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount23"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT03" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount24"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT04" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount25"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT05" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount26"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT06" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount27"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT07" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount28"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.NumberofClassUsingRoom == 1)
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom class</em>
+                                        }
+                                        else
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom classes</em>
+                                        }
+                                        @if (item.numberofreadingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofreadingskill Reading</em>
+                                        }
+
+                                        @if (item.numberofwritingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofwritingskill Wringting</em>
+                                        }
+
+                                        @if (item.numeberoflisteningskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numeberoflisteningskill Listening</em>
+                                        }
+
+                                        @if (item.numberofspeakingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofspeakingskill Speaking</em>
+                                        }
+
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+
+
+                <li class="cd-schedule__group">
+                    <div class="cd-schedule__top-info"><span>Friday<br />@Session["Friday"]</span></div>
+
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            if (item.DayOfWeek == "Friday" && item.NumberofClassUsingRoom != 0)
+                            {
+                                <li class="cd-schedule__event">
+                                    <a class="schedule" data-slot="@item.SlotID" data-tim="@item.Date" data-start="@item.TimeStart" data-end="@item.TimeEnd" data-content="@Url.Action("IndexGet","UsingRooms")" data-event="event-9" href="#0">
+                                        @if (item.SlotID == "SLOT01" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount29"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT02" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount30"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT03" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount31"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT04" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount32"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT05" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount33"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT06" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount34"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT07" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount35"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.NumberofClassUsingRoom == 1)
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom class</em>
+                                        }
+                                        else
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom classes</em>
+                                        }
+                                        @if (item.numberofreadingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofreadingskill Reading</em>
+                                        }
+                                        @if (item.numberofwritingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofwritingskill Wringting</em>
+                                        }
+                                        @if (item.numeberoflisteningskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numeberoflisteningskill Listening</em>
+                                        }
+                                        @if (item.numberofspeakingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofspeakingskill Speaking</em>
+                                        }
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+
+                <li class="cd-schedule__group">
+                    <div class="cd-schedule__top-info"><span>Saturday<br />@Session["Saturday"]</span></div>
+
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            if (item.DayOfWeek == "Saturday" && item.NumberofClassUsingRoom != 0)
+                            {
+                                <li class="cd-schedule__event">
+                                    <a class="schedule" data-slot="@item.SlotID" data-tim="@item.Date" data-start="@item.TimeStart" data-end="@item.TimeEnd" data-content="@Url.Action("IndexGet","UsingRooms")" data-event="event-10" href="#0">
+                                        @if (item.SlotID == "SLOT01" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount36"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT02" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount37"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT03" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount38"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT04" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount39"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT05" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount40"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT06" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount41"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT07" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount42"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.NumberofClassUsingRoom == 1)
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom class</em>
+                                        }
+                                        else
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom classes</em>
+                                        }
+                                        @if (item.numberofreadingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofreadingskill Reading</em>
+                                        }
+                                        @if (item.numberofwritingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofwritingskill Wringting</em>
+                                        }
+                                        @if (item.numeberoflisteningskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numeberoflisteningskill Listening</em>
+                                        }
+                                        @if (item.numberofspeakingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofspeakingskill Speaking</em>
+                                        }
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+
+                <li class="cd-schedule__group">
+                    <div class="cd-schedule__top-info"><span>Sunday<br />@Session["Sunday"]</span></div>
+
+                    <ul>
+                        @foreach (var item in Model)
+                        {
+                            if (item.DayOfWeek == "Sunday" && item.NumberofClassUsingRoom != 0)
+                            {
+                                <li class="cd-schedule__event">
+                                    <a class="schedule" data-slot="@item.SlotID" data-tim="@item.Date" data-start="@item.TimeStart" data-end="@item.TimeEnd" data-content="@Url.Action("IndexGet","UsingRooms")" data-event="event-11" href="#0">
+                                        @if (item.SlotID == "SLOT01" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount43"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT02" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount44"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT03" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount45"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT04" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount46"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT05" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount47"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT06" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount48"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.SlotID == "SLOT07" && item.NumberofClassUsingRoom != 0)
+                                        {
+
+                                            <h5 id="timecount49"><em class="cd-schedule__name"></em></h5>
+                                        }
+                                        @if (item.NumberofClassUsingRoom == 1)
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom class</em>
+                                        }
+                                        else
+                                        {
+                                            <em class="cd-schedule__name">Have @item.NumberofClassUsingRoom classes</em>
+                                        }
+                                        @if (item.numberofreadingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofreadingskill Reading</em>
+                                        }
+                                        @if (item.numberofwritingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofwritingskill Wringting</em>
+                                        }
+                                        @if (item.numeberoflisteningskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numeberoflisteningskill Listening</em>
+                                        }
+                                        @if (item.numberofspeakingskill != 0)
+                                        {
+                                            <em class="cd-schedule__name">@item.numberofspeakingskill Speaking</em>
+                                        }
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+
+        @*<div id='myModal' class='modal'>
+                <div class="modal-dialog" style="margin:auto;">
+                    <div class="modal-content" style="width:1000px;margin-top:150px;">
+                        <div id='myModalContent' style="padding: 20px;"></div>
+                    </div>
+                </div>
+            </div>*@
+
+
+        <div class="cd-schedule-modal">
+            <header class="cd-schedule-modal__header">
+                <div class="cd-schedule-modal__content">
+                    <span class="cd-schedule-modal__date"></span>
+                    <h3 class="cd-schedule-modal__name"></h3>
+                </div>
+
+                <div class="cd-schedule-modal__header-bg"></div>
+            </header>
+
+            <div class="cd-schedule-modal__body">
+                <div class="cd-schedule-modal__event-info"></div>
+                <div class="cd-schedule-modal__body-bg"></div>
+            </div>
+
+            <a href="#0" class="cd-schedule-modal__close text-replace">Close</a>
+        </div>
+
+        <div class="cd-schedule__cover-layer"></div>
+
+
+
+    </div> <!-- .cd-schedule -->
+
+    <script src="~/MaterialSchedule/assets/js/util.js"></script> <!-- util functions included in the CodyHouse framework -->
+    <script src="~/MaterialSchedule/assets/js/main.js"></script>
+
+    <script src="~/MaterialPickDate/pikaday.js"></script>
+    <script>
+
+        var picker = new Pikaday(
+        {
+            field: document.getElementById('date'),
+            //firstDay: 1,
+            //minDate: new Date(),
+            //maxDate: new Date(2020, 12, 31),
+            //yearRange: [2000,2020]
+        });
+
+    </script>
+    <script>
+        //var end = new Date('10/14/2019 09:00 AM');
+        //var end = new Date('@ViewBag.fd' + ' ' + '@ViewBag.slot1' + ' ' + 'AM');
+        //var end1 = new Date('@ViewBag.fd' + ' ' + '@ViewBag.slot2' + ' ' + 'AM');
+        //var end2 = new Date('@ViewBag.fd' + ' ' + '@ViewBag.slot3' + ' ' + 'PM');
+        //var end3 = new Date('@ViewBag.fd' + ' ' + '@ViewBag.slot4' + ' ' + 'PM');
+        //var end4 = new Date('@ViewBag.fd' + ' ' + '@ViewBag.slot5' + ' ' + 'PM');
+        //var end5 = new Date('@ViewBag.fd' + ' ' + '@ViewBag.slot6' + ' ' + 'PM');
+        //var end6 = new Date('@ViewBag.fd' + ' ' + '@ViewBag.slot7' + ' ' + 'PM');
+        var _second = 1000;
+        var _minute = _second * 60;
+        var _hour = _minute * 60;
+        var _day = _hour * 24;
+        var timer;
+
+        Date.prototype.addDays = function (days) {
+            var date = new Date(this.valueOf());
+            @*var date = new Date('@ViewBag.fd' + ' ' + '@ViewBag.slot1' + ' ' + 'AM');*@
+            date.setDate(date.getDate() + days);
+            return date;
+        }
+        function mainLoad() {
+            let slotList = ["09:00 AM", "10:40 AM", "12:50 PM", "02:30 PM", "04:10 PM", "05:50 PM", "07:30 PM"]
+            let number = 0;
+            for (var i = 0 ; i < 7; i++) {
+                for (var y = 0; y < 7; y++) {
+                    var date = new Date('@Session["timepara"]' + ' ' + slotList[y]);
+                    //console.log(date.addDays(i));
+
+                    number++;
+
+                    var mainid = "timecount" + number;
+                    showRemaining(date, mainid);
+                }
+                
+            }
+        }
+
+        function showRemaining(end, id) {
+            if (document.getElementById(id) == null) return
+            var now = new Date();
+            var distance = end - now;
+            if (distance < 0) {
+                clearInterval(timer);
+
+                document.getElementById(id).innerHTML = 'EXPIRED!';
+                return;
+            }
+            console.log(distance);
+            var days = Math.floor(distance / _day);
+            var hours = Math.floor((distance % _day) / _hour);
+            var minutes = Math.floor((distance % _hour) / _minute);
+            var seconds = Math.floor((distance % _minute) / _second);
+            document.getElementById(id).innerHTML = days + 'd ';
+            document.getElementById(id).innerHTML += hours + 'h ';
+            document.getElementById(id).innerHTML += minutes + 'm ';
+            document.getElementById(id).innerHTML += seconds + 's';
+        }
+        setInterval(() => mainLoad(), 1000);
+        
+    </script>
+    
+    @*<script>
+            var end = new Date('10/14/2019 09:00 AM');
+
+            var _second = 1000;
+            var _minute = _second * 60;
+            var _hour = _minute * 60;
+            var _day = _hour * 24;
+            var timer;
+
+            function showRemaining() {
+                var now = new Date();
+                var distance = end - now;
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById("hourmain").innerHTML = 'EXPIRED!';
+                    return;
+                }
+                var days = Math.floor(distance / _day);
+                var hours = Math.floor((distance % _day) / _hour);
+                var minutes = Math.floor((distance % _hour) / _minute);
+                var seconds = Math.floor((distance % _minute) / _second);
+
+                document.getElementById("hourmain").innerHTML = days + 'd ';
+                document.getElementById("hourmain").innerHTML += hours + 'h ';
+                document.getElementById("hourmain").innerHTML += minutes + 'm ';
+                document.getElementById("hourmain").innerHTML += seconds + 's';
+            }
+
+            timer = setInterval(showRemaining, 1000);
+        </script>*@
+</body>
+</html>

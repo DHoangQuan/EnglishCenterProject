@@ -1,0 +1,16 @@
+﻿@model IEnumerable<EnglishCenter.Models.Quote>
+@foreach (var item in Model)
+{
+    <article class="brick entry format-quote animate-this">
+
+        <div class="entry-thumb">
+            <blockquote>
+                <p>@item.ContentQuote</p>
+
+                <cite>@item.Author</cite>
+            </blockquote>
+        </div>
+
+    </article>
+    <!-- end article -->
+}

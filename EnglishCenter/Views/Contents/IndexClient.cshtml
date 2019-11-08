@@ -1,0 +1,135 @@
+﻿@model PagedList.IPagedList<EnglishCenter.Models.Content>
+@using PagedList.Mvc;
+@{
+    //ViewBag.Title = "IndexClient";
+    Layout = "~/Views/Shared/_BlogLayout.cshtml";
+}
+<section id="bricks">
+    <div class="row masonry">
+
+        <!-- brick-wrapper -->
+        <div class="bricks-wrapper">
+
+            <div class="grid-sizer"></div>
+            @{
+
+                @*<div class="grid-sizer"></div>*@
+            int i = 1;
+            if (Convert.ToInt32(Session["Checkslide"].ToString()) > 0)
+            {
+                @Html.Action("SlideAll", "Contents")
+                }
+
+                foreach (var item in Model)
+                {
+                    if (i == 2)
+                    {
+                        @Html.Action("ShowQuote1", "Quotes")
+                    }
+                    if (i == 4)
+                    {
+                        @Html.Action("ShowQuote2", "Quotes")
+                    }
+                    <article class="brick entry animate-this">
+
+                        <div class="entry-thumb">
+                            <a href="@Url.Action("DetailInClient","Contents", new {id=item.content_id })" class="thumb-link">
+                                @*<img src="@item.RepresentImage" alt="Pattern">*@
+                                @*<img src="~/MaterialBlogTemplate/images/thumbs/featured/featured-1.jpg" alt="Pattern" />*@
+                                @*<img src="~/MaterialBlogTemplate/images/thumbs/single/single-01.jpg" alt="building"/>*@
+                                @*<img src="~/MaterialBlogTemplate/images/thumbs/ferris-wheel.jpg" />*@
+                                <img  src="@item.RepresentImage" />
+                            </a>
+                        </div>
+
+                        <div class="entry-text">
+                            <div class="entry-header">
+
+                                <div class="entry-meta">
+                                    <span class="cat-links">
+                                        <a href="#">@item.TopicPost.TopicName</a>
+                                        <a href="#">@item.Person.Name</a>
+                                    </span>
+                                </div>
+
+                                <h1 class="entry-title"><a href="@Url.Action("DetailInClient","Contents", new {id=item.content_id })">@item.content_title</a></h1>
+
+                            </div>
+                            <div class="entry-excerpt">
+                                @Html.Raw(item.content_post.Substring(0, 200) + "......   ")
+                            </div>
+                        </div>
+
+                    </article> <!-- end article -->
+                    i++;
+                }
+
+            }
+
+        </div> <!-- end brick-wrapper -->
+    </div> <!-- end row -->
+
+    <div class="row">
+
+        <nav class="pagination">
+            @*<span class="page-numbers prev inactive">Prev</span>
+                <span class="page-numbers current">1</span>
+                <a href="#" class="page-numbers">2</a>
+                <a href="#" class="page-numbers">3</a>
+                <a href="#" class="page-numbers">4</a>
+                <a href="#" class="page-numbers">5</a>
+                <a href="#" class="page-numbers">6</a>
+                <a href="#" class="page-numbers">7</a>
+                <a href="#" class="page-numbers">8</a>
+                <a href="#" class="page-numbers">9</a>
+                <a href="#" class="page-numbers next">Next</a>*@
+            @if (Model.HasPreviousPage)
+            {
+                @Html.ActionLink("<<", "IndexClient", new { Page = 1 })
+                @Html.Raw(" ")
+                @Html.ActionLink("Prve", "IndexTopicPostClient", new { Page = Model.PageNumber - 1 }, new { @class = "page-numbers next" })
+                for (int y = 1; y <= Model.PageCount; y++)
+                {
+                    if (y == Model.PageNumber)
+                    {
+                        @Html.ActionLink(@y.ToString(), "IndexClient", "Contents", new { page = @y }, new { @class = "page-numbers current" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink(@y.ToString(), "IndexClient", "Contents", new { page = @y }, new { @class = "page-numbers" })
+                    }
+                }
+            }
+            else
+            {
+                @:<<
+                @Html.Raw(" ")
+                @:< Prevs
+            for (int y = 1; y <= Model.PageCount; y++)
+                {
+                    if (y == Model.PageNumber)
+                    {
+                        @Html.ActionLink(@y.ToString(), "IndexClient", "Contents", new { page = @y }, new { @class = "page-numbers current" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink(@y.ToString(), "IndexClient", "Contents", new { page = @y }, new { @class = "page-numbers" })
+                    }
+                }
+            }
+            @Html.Raw(" ")
+            @if (Model.HasNextPage)
+            {
+                @Html.ActionLink("Next", "IndexClient", new { Page = Model.PageNumber + 1 }, new { @class = "page-numbers next" })
+                @Html.Raw(" ")
+                @Html.ActionLink(">>", "IndexClient", new { Page = Model.PageCount })
+            }
+            else
+            {
+                @:Next>
+                @Html.Raw(" ")
+                @:>>
+        }
+        </nav>
+    </div>
+</section> <!-- end bricks -->

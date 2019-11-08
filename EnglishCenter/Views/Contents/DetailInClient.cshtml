@@ -1,0 +1,191 @@
+﻿@model EnglishCenter.Models.Content
+@{
+    //ViewBag.Title = "DetailInClient";
+    Layout = "~/Views/Shared/_BlogLayout.cshtml";
+}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="//js.pusher.com/4.0/pusher.min.js"></script>
+
+
+
+<!-- content
+   ================================================== -->
+<div id="app">
+    <section id="content-wrap" class="blog-single">
+
+        <div class="row">
+            <div class="col-twelve">
+
+                <article class="format-standard">
+
+                    <div class="content-media">
+                        <div class="post-thumb">
+                            <img src="@Model.RepresentImage">
+                        </div>
+                    </div>
+
+                    <div class="primary-content">
+
+                        <h1 class="page-title">@Model.content_title</h1>
+
+                        <ul class="entry-meta">
+                            <li class="date">@Convert.ToDateTime(Model.date_post.ToString()).ToShortDateString()</li>
+                            <li class="cat"><a href="@Url.Action("IndexTopicPostClient", "Contents", new { id = Model.TopicPostID })">@Model.TopicPost.TopicName</a></li>
+                        </ul>
+
+                        @Html.Raw(Model.content_post)
+
+                        <div class="author-profile">
+                            @if (Model.Person.Image == null || Model.Person.Image == "")
+                            {
+                                <img width="50" height="50" class="avatar" src="~/MaterialBlogTemplate/images/NoneImage.png" alt="">
+                            }
+                            else
+                            {
+                                <img src="@Model.Person.Image" alt="">
+                            }
+
+
+                            <div class="about">
+                                <h4><a href="#">Upload by: @Model.Person.Name</a></h4>
+
+                                @*<p>
+                                        Alias aperiam at debitis deserunt dignissimos dolorem doloribus, fuga fugiat impedit laudantium magni maxime nihil nisi quidem quisquam sed ullam voluptas voluptatum. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                    </p>
+
+                                    <ul class="author-social">
+                                        <li><a href="#">Facebook</a></li>
+                                        <li><a href="#">Twitter</a></li>
+                                        <li><a href="#">GooglePlus</a></li>
+                                        <li><a href="#">Instagram</i></a></li>
+                                    </ul>*@
+                            </div>
+                        </div> <!-- end author-profile -->
+
+                    </div> <!-- end entry-primary -->
+
+                    <div class="pagenav group">
+
+                    </div>
+
+                </article>
+
+
+            </div> <!-- end col-twelve -->
+        </div> <!-- end row -->
+        <div class="comments-wrap">
+            <div id="comments" class="row">
+                <div class="col-full">
+                    <h3>{{comments.length}} Comments</h3>
+                    <div v-for="com in comments">
+                        <!-- commentlist -->
+                        <ol class="commentlist">
+
+                            <li class="depth-1">
+
+                                <div v-if="(com.Image !== '[none]')" class="avatar">
+                                    <img v-bind:src="com.Image" />
+
+                                    @*<img v-bind:src="'/MaterialBlogTemplate/images/NoneImage.png'" />*@
+                                </div>
+                                <div v-if="(com.Image !== '[none]')" class="avatar">
+
+                                    <img v-bind:src="'/MaterialBlogTemplate/images/NoneImage.png'" />
+
+                                </div>
+
+                                <div class="comment-content">
+
+                                    <div class="comment-info">
+                                        <cite>{{com.Name}}</cite>
+                                        <div class="comment-meta">
+                                            <time class="comment-time">{{ConvertTimestampToDateTime(com.comment_date)}}</time>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="comment-text">
+                                        <p>
+                                            {{com.comment_content}}
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                            </li>
+
+                        </ol>
+                    </div>
+                    <div class="respond">
+                        <h4>Leave your comment</h4>
+                        <form onsubmit="return false;">
+
+                            <textarea id="comment_content" v-model="comment.comment_content" class="full-width"></textarea>
+                            <button class="submit button-primary" v-on:click="submit_comment()">Subbmit</button>
+                        </form>
+
+                    </div>
+                    @*End*@
+
+                </div> <!-- end col-full -->
+            </div> <!-- end row comments -->
+        </div> <!-- end comments-wrap -->
+
+    </section> <!-- end content -->
+</div>
+
+<script>
+
+    var pusher = new Pusher('8ce5a959f6c9469e2d20', {
+        cluster: 'ap1'
+    });
+    var my_channel = pusher.subscribe('asp_channel');
+    var app = new Vue({
+        el: '#app',
+        data: {
+            comments: [],
+            comment: {
+                comment_content: '',
+                content_id: @Model.content_id,
+            }
+        },
+        created: function () {
+            this.get_comments();
+            this.listen();
+        },
+        methods: {
+            get_comments: function () {
+                axios.get('@Url.Action("Comments", "Contents", new { id = @Model.content_id }, protocol: Request.Url.Scheme)')
+                  .then((response)=> {
+                      this.comments = response.data;
+                      //document.getElementById('test').innerHTML = response.data
+                      console.log(response)
+                  });
+
+            },
+            listen: function () {
+                my_channel.bind("asp_event", (data) => {
+                    if (data.content_id == this.comment.content_id){
+                        this.comments.push(data);
+
+                    }
+
+
+                })
+            },
+            submit_comment: function(){
+                axios.post('@Url.Action("Comment", "Contents", new {}, protocol: Request.Url.Scheme)', this.comment)
+                 .then((response)=> {
+                     this.comment.comment_content = '';
+                     alert("Comment Submitted");
+                 });
+            },
+            ConvertTimestampToDateTime : function (timestamp ) {
+                return moment(timestamp ).format('lll');
+            }
+        }
+    });
+</script>

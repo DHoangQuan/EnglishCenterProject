@@ -1,0 +1,69 @@
+﻿@model IEnumerable<EnglishCenter.Models.Lesson>
+
+@{
+//ViewBag.Title = "Index";
+
+}
+
+
+
+<div class="cd-schedule-modal__event-info">
+    <div>
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                <h3><span>Topic: @item.Topic.TopicName</span></h3>
+            </div>
+            <div class="row">
+                <h3><span>Lesson Name: @item.LessonName</span></h3>
+            </div>
+            <div>
+                <h3><span>Your Lesson: </span></h3>
+                <br />
+                <span>@Html.Raw(item.Resource)</span>
+            </div>
+            <a href="@Url.Action("DownloadZip", "Lessons", new { id = item.LessonID})" class="btn btn-primary" onclick="return confirm('Do you want to download this lesson?')">Download</a>
+        }
+        @*<table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Topic.TopicName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.LessonName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Resource)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RepeatTimes)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Topic.TopicName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LessonName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Resource)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RepeatTimes)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.LessonID }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.LessonID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.LessonID })
+                        </td>
+                    </tr>
+                }
+
+            </table>*@
+    </div>
+</div>

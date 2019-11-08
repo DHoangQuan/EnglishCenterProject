@@ -1,0 +1,53 @@
+﻿@model IEnumerable<EnglishCenter.Models.Lesson>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Topic.TopicName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LessonName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resource)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RepeatTimes)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Topic.TopicName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LessonName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resource)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RepeatTimes)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.LessonID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.LessonID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.LessonID }) ||
+            @Html.ActionLink("DownloadZip", "DownloadZip", new { id = item.LessonID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,177 @@
+﻿@using EnglishCenter.Models
+@model List<ReportForStudentTimesSkill>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Create two equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+<div>
+    @if (Convert.ToInt32(Session["ParaForReportStudentTime1Year"].ToString()) < DateTime.Now.Year)
+    {
+        <span>The report for the number of slots that you studied in @Session["ParaForReportStudentTime1Year"].ToString().</span>
+    }
+    else if (Convert.ToInt32(Session["ParaForReportStudentTime1Year"].ToString()) == DateTime.Now.Year)
+    {
+        <span>The report for the number of times studied is based on your studied slots from the first day of the year to now(@DateTime.Now.ToString("dd-MM-yyyy")).</span>
+
+    }
+    else
+    {
+        <span>In the future.</span>
+    }
+</div>
+
+<div class="row">
+    <div class="column" ">
+        <div class="table-edit">
+            <table class="table">
+                <thead class="table-cate-header">
+                    <tr>
+                        <th>
+                            <strong><span>Skill</span></strong>
+                        </th>
+                        <th>
+                            <strong><span>Number times of Studied</span></strong>
+                        </th>
+                        <th>
+                            <strong><span>Percent</span></strong>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="table-cate-header">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <span>@item.SKillName</span>
+                            </td>
+                            <td>
+                                <span>@item.NumberOfStudiedSkill</span>
+                            </td>
+                            <td>
+                                <span>@item.Percent</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <div class="column">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Studied Skills Chart</h4>
+                    <canvas id="barChart5" style="height:230px; width:500px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function drawdata14(result) {
+            'use strict';
+            var label5 = [];
+            var dataNumber5 = [];
+
+            $.each(result.rpfsttkjs, function (i, obj) {
+                label5.push(obj.SKillName);
+                dataNumber5.push(obj.NumberOfStudiedSkill);
+
+            });
+            var intToRGB = function (value, alpha, max) {
+                var valueAsPercentageOfMax = value / max;
+                var MAX_RGB_INT = 16600000;
+                var valueFromMaxRgbInt = Math.floor(MAX_RGB_INT * valueAsPercentageOfMax);
+
+                var blue = Math.floor(valueFromMaxRgbInt % 256);
+                var green = Math.floor(valueFromMaxRgbInt / 256 % 256);
+                var red = Math.floor(valueFromMaxRgbInt / 256 / 256 % 256);
+
+                return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
+            }
+            var MAX = 25;
+
+            var backgroundColors = dataNumber5.map(function (item) {
+                return intToRGB(item, 0.2, MAX);
+            });
+
+            var borderColors = dataNumber5.map(function (item) {
+                return intToRGB(item, 1, MAX);
+            });
+            var data5 = {
+                labels: label5,
+                datasets: [{
+                    label: '# of Votes',
+                    data: dataNumber5,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+
+                    borderWidth: 1,
+                    fill: false
+                }]
+            };
+            var options5 = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                }
+
+            };
+            if ($("#barChart5").length) {
+                var barChartCanvas = $("#barChart5").get(0).getContext("2d");
+                // This will get the first returned node in the jQuery collection.
+                var barChart = new Chart(barChartCanvas, {
+                    type: 'bar',
+                    data: data5,
+                    options: options5
+                });
+            }
+        }
+        $(function () {
+            $.ajax({
+                url: '/StudentTimes/ReportStudentTimeSkillJson',
+                dataType: "json",
+                contentType: "application/json",
+                type: "GET",
+                success: function (result) {
+                    //console.log(result);
+                    //console.log(result.datapoint.length)
+                    drawdata14(result);
+                }
+
+            })
+            /* ChartJS
+             * -------
+             * Data and config for chartjs
+             */
+
+        });
+</script>

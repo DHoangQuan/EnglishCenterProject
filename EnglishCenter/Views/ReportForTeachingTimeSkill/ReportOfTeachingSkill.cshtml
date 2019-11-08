@@ -1,0 +1,163 @@
+﻿@model IEnumerable<EnglishCenter.Models.ReportForTeachingTimeSkill>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    /* Create two equal columns that floats next to each other */
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
+<div class="row">
+    <div class="column" ">
+        <div class="table-edit">
+            <table class="table">
+                <thead class="table-cate-header">
+                    <tr>
+                        <th>
+                            <span>Skill</span>
+                        </th>
+                        <th>
+                            <span>Number times of teaching</span>
+                        </th>
+                        <th>
+                            <span>Percent</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="table-cate-header">
+                    @foreach (var item in Model)
+            {
+                        <tr>
+                            <td>
+                                <span>@item.SKillName</span>
+                            </td>
+                            <td>
+                                <span>@item.NumberOfTeachingSkill</span>
+                            </td>
+                            <td>
+                                <span>@item.Percent</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+    <div class="column">
+        
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Teaching Skills Chart</h4>
+                    <canvas id="barChart4" style="height:230px; width:500px;"></canvas>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    function drawdata12(result) {
+            'use strict';
+            var label = [];
+            var dataNumber = [];
+
+            $.each(result.rpftts, function (i, obj) {
+                label.push(obj.SKillName);
+                dataNumber.push(obj.NumberOfTeachingSkill);
+
+            });
+            var intToRGB = function (value, alpha, max) {
+                var valueAsPercentageOfMax = value / max;
+                var MAX_RGB_INT = 16600000;
+                var valueFromMaxRgbInt = Math.floor(MAX_RGB_INT * valueAsPercentageOfMax);
+
+                var blue = Math.floor(valueFromMaxRgbInt % 256);
+                var green = Math.floor(valueFromMaxRgbInt / 256 % 256);
+                var red = Math.floor(valueFromMaxRgbInt / 256 / 256 % 256);
+
+                return "rgba(" + red + "," + green + "," + blue + "," + alpha + ")";
+            }
+            var MAX = 25;
+
+            var backgroundColors = dataNumber.map(function (item) {
+                return intToRGB(item, 0.2, MAX);
+            });
+
+            var borderColors = dataNumber.map(function (item) {
+                return intToRGB(item, 1, MAX);
+            });
+            var data4 = {
+                labels: label,
+                datasets: [{
+                    label: '# of Votes',
+                    data: dataNumber,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+
+                    borderWidth: 1,
+                    fill: false
+                }]
+            };
+            var options4 = {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                }
+
+            };
+            if ($("#barChart4").length) {
+                var barChartCanvas = $("#barChart4").get(0).getContext("2d");
+                // This will get the first returned node in the jQuery collection.
+                var barChart = new Chart(barChartCanvas, {
+                    type: 'bar',
+                    data: data4,
+                    options: options4
+                });
+            }
+        }
+        $(function () {
+            $.ajax({
+                url: '/ReportForTeachingTimeSkill/ReportOfTeachingSkill1234',
+                dataType: "json",
+                contentType: "application/json",
+                type: "GET",
+                success: function (result) {
+                    //console.log(result);
+                    //console.log(result.datapoint.length)
+                    drawdata12(result);
+                }
+
+            })
+            /* ChartJS
+             * -------
+             * Data and config for chartjs
+             */
+
+        });
+</script>
+

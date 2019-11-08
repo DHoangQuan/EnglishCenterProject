@@ -1,0 +1,14 @@
+﻿@using EnglishCenter.Models;
+@model List<Catalogue>
+
+@foreach (var item in Model)
+            {
+    @*<a href="@Url.Action("BrandCus", new {@id=item.BrandID })"> @item.BName</a>*@
+
+    <li class="has-children">
+        <a href="category.html" title="">@item.CatalogueName</a>
+        <ul class="sub-menu">
+            @Html.Action("TopicPostListInClient", "TopicPosts", new { id = item.Catalogue1 })
+        </ul>
+    </li>
+}

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<EnglishCenter.Models.QuantityAndAttendance>
+@{
+    ViewBag.Title = "HistoryForStudent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /*body {
+        font-family: Arial;
+        color: black;
+    }*/
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .split {
+        height: 23%;
+        position: relative;
+        z-index: 1;
+        top: 0;
+        overflow-x: hidden;
+        padding-top: 10px;
+        border-style: groove;
+    }
+
+    .left {
+        left: 0;
+        width: 80%;
+    }
+
+    .right {
+        right: 0;
+        width: 20%;
+        background-color: red;
+    }
+
+    .characterleft {
+        top: 10%;
+        left: 50%;
+    }
+
+    .centered {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+    }
+</style>
+@foreach(var item in Model) { 
+<div class="split left">
+    <div class="column">
+        <h2>Skill :@item.UsingRoom.Class.Lesson.Topic.Skill.Name </h2>
+        <p>Topic :@item.UsingRoom.Class.Lesson.Topic.TopicName</p>
+        <p>Lesson :@item.UsingRoom.Class.Lesson.LessonName </p>
+    </div>
+    <div class="column">
+        <h2>Teacher :@item.UsingRoom.Class.Person.Name</h2>
+        <p>Slot :@item.UsingRoom.Slot.SlotName (@item.UsingRoom.Slot.TimeStart - @item.UsingRoom.Slot.TimeEnd)  </p>
+    </div>
+</div>
+
+<div class="split right">
+    <div class="centered">
+        <h1>@item.Attendent</h1>
+        <p>@Convert.ToDateTime(item.UsingRoom.Date.ToString()).ToShortDateString()</p>
+    </div>
+</div>
+}
